@@ -29,6 +29,11 @@ class AppModule {
     }
 
     @Provides
+    fun provideCityDao(apptSchedulerDb: AppointmentSchedulerDb):CityDao {
+        return apptSchedulerDb.CityDao()
+    }
+
+    @Provides
     fun provideApptSchedulerRepository(
         appointmentDao: AppointmentDao,
         cityDao: CityDao,

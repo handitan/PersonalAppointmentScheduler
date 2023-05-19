@@ -8,19 +8,20 @@ import androidx.room.Update
 import com.handitan.personalappointmentscheduler.core.Constants.Companion.APPOINTMENT_TABLE
 import com.handitan.personalappointmentscheduler.core.Constants.Companion.CITY_TABLE
 import com.handitan.personalappointmentscheduler.data.model.Appointment
+import com.handitan.personalappointmentscheduler.data.model.AppointmentData
 
 @Dao
 interface AppointmentDao {
     @Query("SELECT " +
             "A.id," +
-            "A.date," +
-            "A.time," +
+            "A.dateTime," +
             "A.description," +
-            "C.name AS City " +
+            "A.cityId," +
+            "C.name AS cityName " +
             "FROM $APPOINTMENT_TABLE AS A " +
             "INNER JOIN $CITY_TABLE AS C " +
             "ON A.cityId = C.id")
-    fun getAppointments():List<Appointment>
+    fun getAppointments():List<AppointmentData>
 
     @Insert
     fun insert(appointment:Appointment)

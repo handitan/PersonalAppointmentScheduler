@@ -2,7 +2,12 @@ package com.handitan.personalappointmentscheduler.core
 
 class Constants {
     companion object {
+        //DB table
         const val APPOINTMENT_TABLE = "appointment_table"
         const val CITY_TABLE = "city_table"
+
+        //Screens
+        const val ALLAPPOINTMENT_SCREEN = "AllAppointmentScreen"
+        const val UPDATEAPPOINTMENT_SCREEN = "UpdateAppointmentScreen"
     }
 }

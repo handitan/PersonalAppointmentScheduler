@@ -4,6 +4,7 @@ import com.handitan.personalappointmentscheduler.data.dao.AppointmentDao
 import com.handitan.personalappointmentscheduler.data.dao.CityDao
 import com.handitan.personalappointmentscheduler.data.database.AppointmentSchedulerDb
 import com.handitan.personalappointmentscheduler.data.model.Appointment
+import com.handitan.personalappointmentscheduler.data.model.AppointmentData
 
 class AppointmentSchedulerRepositoryImpl(
     private val apptDao:AppointmentDao,
@@ -11,7 +12,7 @@ class AppointmentSchedulerRepositoryImpl(
     private val apptSchedulerDb: AppointmentSchedulerDb
 ) : AppointmentSchedulerRepository {
 
-    override suspend fun getAllAppointments():List<Appointment> {
+    override suspend fun getAllAppointments():List<AppointmentData> {
         return apptDao.getAppointments()
     }
 

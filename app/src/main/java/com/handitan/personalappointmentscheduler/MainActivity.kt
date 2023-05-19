@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.handitan.personalappointmentscheduler.navigation.NavGraph
 import com.handitan.personalappointmentscheduler.ui.theme.PersonalAppointmentSchedulerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +26,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    NavGraph(navController = rememberNavController())
                 }
             }
         }

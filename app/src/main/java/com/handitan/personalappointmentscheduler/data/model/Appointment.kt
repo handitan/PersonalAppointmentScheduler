@@ -2,6 +2,7 @@ package com.handitan.personalappointmentscheduler.data.model
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.handitan.personalappointmentscheduler.core.Constants
 
@@ -20,6 +21,5 @@ data class Appointment(
     val id:Long,
     val description:String,
     val cityId:Long,
-    val date:Long,
-    val time:Long
+    val dateTime:Long
 )

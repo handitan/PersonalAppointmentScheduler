@@ -8,6 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.handitan.personalappointmentscheduler.data.dao.AppointmentDao
 import com.handitan.personalappointmentscheduler.data.dao.CityDao
 import com.handitan.personalappointmentscheduler.data.model.Appointment
+import com.handitan.personalappointmentscheduler.data.model.AppointmentData
 import com.handitan.personalappointmentscheduler.data.model.City
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -29,12 +30,18 @@ abstract class AppointmentSchedulerDb : RoomDatabase(){
 
                     val city1 = City(0,"Austin")
                     val city2 = City(0,"Baltimore")
-                    val city3 = City(0, "Cleaveland")
+                    val city3 = City(0, "Cleveland")
                     val city4 = City(0,"Dallas")
                     cityDao.insert(city1)
                     cityDao.insert(city2)
                     cityDao.insert(city3)
                     cityDao.insert(city4)
+
+                    val appt1 = Appointment(0,"Meeting with Mr Song",1,1684421609)
+                    val appt2 = Appointment(0,"Meeting with Mr Gong",2,1684421609)
+
+                    apptDao.insert(appt1)
+                    apptDao.insert(appt2)
                 }
 
             }
