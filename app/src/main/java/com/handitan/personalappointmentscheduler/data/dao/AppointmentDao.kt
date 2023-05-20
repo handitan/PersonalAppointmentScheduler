@@ -23,6 +23,17 @@ interface AppointmentDao {
             "ON A.cityId = C.id")
     fun getAppointments():List<AppointmentData>
 
+    @Query("SELECT " +
+            "A.id," +
+            "A.dateTime," +
+            "A.description," +
+            "A.cityId," +
+            "C.name AS cityName " +
+            "FROM $APPOINTMENT_TABLE AS A " +
+            "INNER JOIN $CITY_TABLE AS C " +
+            "ON A.cityId = C.id WHERE A.id = :apptId")
+    fun getAppointment(apptId:Long):AppointmentData
+
     @Insert
     fun insert(appointment:Appointment)
 

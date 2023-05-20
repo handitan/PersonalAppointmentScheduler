@@ -2,9 +2,12 @@ package com.handitan.personalappointmentscheduler.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.handitan.personalappointmentscheduler.presentation.ui.appointmentList.AppointmentListScreen
+import com.handitan.personalappointmentscheduler.presentation.ui.update_Appointment.UpdateAppointmentScreen
 
 @Composable
 fun NavGraph(
@@ -17,7 +20,27 @@ fun NavGraph(
         composable(
             route = Screen.AppointmentListScreen.route
         ) {
-            AppointmentListScreen()
+            AppointmentListScreen(
+                navigateToUpdateApptScreen = { apptId ->
+                    navController.navigate(route = Screen.UpdateAppointmentScreen.route + "/$apptId")
+                }
+            )
+        }
+        composable(
+            route = Screen.UpdateAppointmentScreen.route + "/{apptId}",
+            arguments = listOf(
+                navArgument("apptId") {
+                    type = NavType.LongType
+                }
+            )
+        ) {
+            val appointmentId = it.arguments?.getLong("apptId") ?: 1
+            UpdateAppointmentScreen(
+                apptId = appointmentId,
+                navigateBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }

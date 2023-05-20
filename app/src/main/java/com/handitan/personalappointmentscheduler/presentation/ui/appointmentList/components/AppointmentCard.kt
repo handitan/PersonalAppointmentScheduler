@@ -1,5 +1,6 @@
 package com.handitan.personalappointmentscheduler.presentation.ui.appointmentList.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,11 +15,15 @@ import com.handitan.personalappointmentscheduler.data.model.AppointmentData
 
 @Composable
 fun AppointmentCard(
-    currentAppt:AppointmentData
+    currentAppt:AppointmentData,
+    navigateToUpdateApptScreen:(Long)->Unit
 ) {
     Card(modifier = Modifier
         .fillMaxWidth()
-        .padding(15.dp),
+        .padding(15.dp)
+        .clickable {
+            navigateToUpdateApptScreen(currentAppt.id)
+        },
         elevation = CardDefaults.cardElevation()
     ) {
         Column() {
