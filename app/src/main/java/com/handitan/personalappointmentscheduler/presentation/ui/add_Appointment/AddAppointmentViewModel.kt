@@ -1,4 +1,4 @@
-package com.handitan.personalappointmentscheduler.presentation.ui.update_Appointment
+package com.handitan.personalappointmentscheduler.presentation.ui.add_Appointment
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -14,13 +14,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-class UpdateAppointmentViewModel @Inject constructor(
-    private val repo:AppointmentSchedulerRepository
+class AddAppointmentViewModel @Inject constructor(
+    private val repo: AppointmentSchedulerRepository
 ):ViewModel() {
 
     var currentApptViewData by mutableStateOf(AppointmentViewData(0,"",0,"",0,0,0))
@@ -31,29 +29,6 @@ class UpdateAppointmentViewModel @Inject constructor(
 
     var savedDateStr by mutableStateOf("")
         private set
-
-//    var savedTimeHour by mutableStateOf("")
-//        private set
-//
-//    var savedTimeMinute by mutableStateOf("")
-//        private set
-
-    fun getAppointment(apptId:Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val apptData = repo.getAppointment(apptId)
-            withContext(Dispatchers.Main) {
-                currentApptViewData.modify(
-                    apptData.id,
-                    apptData.description,
-                    apptData.cityId,
-                    apptData.cityName,
-                    apptData.date,
-                    apptData.hour,
-                    apptData.minute)
-                savedDateStr = Utilities.changeToDateString(apptData.date)
-            }
-        }
-    }
 
     fun getCities() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -77,9 +52,9 @@ class UpdateAppointmentViewModel @Inject constructor(
         }
     }
 
-    fun updateAppointment() {
+    fun addAppointment() {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.updateAppointment(currentApptViewData.toAppointment())
+            repo.addAppointment(currentApptViewData.toAppointment())
         }
     }
 
@@ -100,8 +75,4 @@ class UpdateAppointmentViewModel @Inject constructor(
         }
     }
 
-//    fun changeToDateString(selectedDateVal:Long) {
-//        val sdf = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
-//        savedDateStr = sdf.format(selectedDateVal)
-//    }
 }

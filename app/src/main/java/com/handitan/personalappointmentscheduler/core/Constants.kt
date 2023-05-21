@@ -8,6 +8,7 @@ class Constants {
 
         //Screens
         const val ALLAPPOINTMENT_SCREEN = "AllAppointmentScreen"
+        const val ADDAPPOINTMENT_SCREEN = "AddAppointmentScreen"
         const val UPDATEAPPOINTMENT_SCREEN = "UpdateAppointmentScreen"
     }
 }
