@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.handitan.personalappointmentscheduler.core.Utilities
 import com.handitan.personalappointmentscheduler.data.model.AppointmentData
 
 @Composable
@@ -29,7 +30,8 @@ fun AppointmentCard(
         Column() {
             Text(text = currentAppt.description)
             Text(text = currentAppt.cityName)
-            Text(text = currentAppt.dateTime.toString())
+            Text(text = Utilities.changeToDateString(currentAppt.date))
+            Text(text = currentAppt.hour.toString() + ":" + currentAppt.minute.toString())
         }
     }
 }

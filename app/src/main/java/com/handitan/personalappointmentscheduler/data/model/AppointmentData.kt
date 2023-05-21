@@ -5,5 +5,7 @@ data class AppointmentData(
     val description:String,
     val cityId:Long,
     val cityName:String,
-    val dateTime:Long
+    val date:Long,
+    val hour:Int,
+    val minute:Int
 )

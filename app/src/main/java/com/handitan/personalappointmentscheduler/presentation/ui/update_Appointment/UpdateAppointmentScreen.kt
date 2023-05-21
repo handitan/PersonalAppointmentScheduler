@@ -1,10 +1,15 @@
 package com.handitan.personalappointmentscheduler.presentation.ui.update_Appointment
 
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.sharp.DateRange
+import androidx.compose.material.icons.sharp.Face
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,8 +29,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.timepicker.MaterialTimePicker
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,6 +50,7 @@ fun UpdateAppointmentScreen(
     }
 
     var expanded by remember { mutableStateOf(false)}
+    val activity = LocalContext.current as AppCompatActivity
 
     Scaffold(
         topBar = {
@@ -91,6 +102,56 @@ fun UpdateAppointmentScreen(
                         }
                     }
                 }
+
+                OutlinedTextField(
+                    value = updateApptViewModel.savedDateStr,
+                    readOnly = true,
+                    onValueChange = {
+                        Log.d("VALUE CHANGE:", it)
+                        },
+                    label = { Text(text = "Appointment Date")},
+                    trailingIcon = {
+                        Icon(imageVector = Icons.Sharp.DateRange,
+                            contentDescription = "Date Picker",
+                            modifier = Modifier.clickable {
+                                val datePicker = MaterialDatePicker
+                                    .Builder
+                                    .datePicker()
+                                    .setTitleText("Appointment Date")
+                                    .build()
+
+                                datePicker.show(activity.supportFragmentManager,"DATE_PICKER")
+                                datePicker.addOnPositiveButtonClickListener {
+                                    updateApptViewModel.updateAppointmentDate(it)
+                                    //Log.i("VALUE CHANGE", date)
+                                }
+                        })
+                    }
+                )
+
+                OutlinedTextField(
+                    value = updateApptViewModel.currentApptViewData.timeHour.toString() + ":" + updateApptViewModel.currentApptViewData.timeMinute.toString(),
+                    readOnly = true,
+                    onValueChange = {
+                        Log.d("VALUE CHANGE:", it)
+                    },
+                    label = { Text(text = "Appointment Time")},
+                    trailingIcon = {
+                        Icon(imageVector = Icons.Sharp.Face,
+                            contentDescription = "Time Picker",
+                            modifier = Modifier.clickable {
+                                val timePicker = MaterialTimePicker
+                                    .Builder()
+                                    .setTitleText("Appointment Time")
+                                    .build()
+
+                                timePicker.show(activity.supportFragmentManager,"TIME_PICKER")
+                                timePicker.addOnPositiveButtonClickListener {
+                                    updateApptViewModel.updateAppointmentTime(timePicker.hour,timePicker.minute)
+                                }
+                            })
+                    }
+                )
 
                 Button(onClick = {
                     updateApptViewModel.updateAppointment()

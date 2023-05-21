@@ -14,9 +14,11 @@ import com.handitan.personalappointmentscheduler.data.model.AppointmentData
 interface AppointmentDao {
     @Query("SELECT " +
             "A.id," +
-            "A.dateTime," +
+            "A.date," +
             "A.description," +
             "A.cityId," +
+            "A.hour," +
+            "A.minute," +
             "C.name AS cityName " +
             "FROM $APPOINTMENT_TABLE AS A " +
             "INNER JOIN $CITY_TABLE AS C " +
@@ -25,9 +27,11 @@ interface AppointmentDao {
 
     @Query("SELECT " +
             "A.id," +
-            "A.dateTime," +
+            "A.date," +
             "A.description," +
             "A.cityId," +
+            "A.hour," +
+            "A.minute," +
             "C.name AS cityName " +
             "FROM $APPOINTMENT_TABLE AS A " +
             "INNER JOIN $CITY_TABLE AS C " +

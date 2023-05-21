@@ -8,12 +8,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.handitan.personalappointmentscheduler.data.dao.AppointmentDao
 import com.handitan.personalappointmentscheduler.data.dao.CityDao
 import com.handitan.personalappointmentscheduler.data.model.Appointment
-import com.handitan.personalappointmentscheduler.data.model.AppointmentData
 import com.handitan.personalappointmentscheduler.data.model.City
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Appointment::class,City::class], version = 1)
+@Database(entities = [Appointment::class,City::class], version = 2)
 abstract class AppointmentSchedulerDb : RoomDatabase(){
     abstract fun AppointmentDao():AppointmentDao
     abstract fun CityDao():CityDao
@@ -37,8 +36,8 @@ abstract class AppointmentSchedulerDb : RoomDatabase(){
                     cityDao.insert(city3)
                     cityDao.insert(city4)
 
-                    val appt1 = Appointment(0,"Meeting with Mr Song",1,1684421609)
-                    val appt2 = Appointment(0,"Meeting with Mr Gong",2,1684421609)
+                    val appt1 = Appointment(0,"Meeting with Mr Song",1,1684421609,2,30)
+                    val appt2 = Appointment(0,"Meeting with Mr Gong",2,1684421609,15,45)
 
                     apptDao.insert(appt1)
                     apptDao.insert(appt2)
@@ -49,7 +48,7 @@ abstract class AppointmentSchedulerDb : RoomDatabase(){
     }
 
     companion object {
-        const val DB_NAME = "AppointmentScheduler-db"
+        private const val DB_NAME = "AppointmentScheduler-db"
         @Volatile
         private var instance:AppointmentSchedulerDb? = null
 
