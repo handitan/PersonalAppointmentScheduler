@@ -23,6 +23,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.handitan.personalappointmentscheduler.data.model.Appointment
 import com.handitan.personalappointmentscheduler.data.model.AppointmentData
 import com.handitan.personalappointmentscheduler.presentation.ui.appointmentList.components.AppointmentCard
 
@@ -41,11 +42,6 @@ fun AppointmentListScreen(
         topBar = {
             TopAppBar(
                 title = { Text(text = "Appointments")},
-//                navigationIcon = {
-//                    IconButton(onClick = { navigateBack() }) {
-//                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
-//                    }
-//                }
             )
         },
         floatingActionButton = {
@@ -66,6 +62,7 @@ fun AppointmentListScreen(
                 items(appointmentListViewModel.appointmentList,key = { it.id }) {
                     AppointmentCard(
                         it,
+                        appointmentListViewModel::deleteAppointment,
                         navigateToUpdateApptScreen)
                 }
             }

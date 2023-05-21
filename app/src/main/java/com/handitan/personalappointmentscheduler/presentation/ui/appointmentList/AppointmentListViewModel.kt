@@ -18,6 +18,15 @@ class AppointmentListViewModel @Inject constructor(
     var appointmentList = mutableStateListOf<AppointmentData>()
         private set
 
+    fun deleteAppointment(apptData:AppointmentData) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.deleteAppointment(apptData.toAppointment())
+            withContext(Dispatchers.Main) {
+                appointmentList.remove(apptData)
+            }
+        }
+    }
+
     fun getAllAppointments() {
         viewModelScope.launch(Dispatchers.IO) {
             try {

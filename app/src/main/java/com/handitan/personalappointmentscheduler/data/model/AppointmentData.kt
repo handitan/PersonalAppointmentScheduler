@@ -8,4 +8,14 @@ data class AppointmentData(
     val date:Long,
     val hour:Int,
     val minute:Int
-)
+) {
+    fun toAppointment():Appointment{
+        return Appointment(
+            id,
+            description,
+            cityId,
+            date,
+            hour,
+            minute)
+    }
+}
