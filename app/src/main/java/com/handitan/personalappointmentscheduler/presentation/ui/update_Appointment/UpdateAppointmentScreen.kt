@@ -117,6 +117,7 @@ fun UpdateAppointmentScreen(
                                 val datePicker = MaterialDatePicker
                                     .Builder
                                     .datePicker()
+                                    .setSelection(updateApptViewModel.currentApptViewData.date)
                                     .setTitleText("Appointment Date")
                                     .build()
 
@@ -142,6 +143,8 @@ fun UpdateAppointmentScreen(
                             modifier = Modifier.clickable {
                                 val timePicker = MaterialTimePicker
                                     .Builder()
+                                    .setHour(updateApptViewModel.currentApptViewData.timeHour)
+                                    .setMinute(updateApptViewModel.currentApptViewData.timeMinute)
                                     .setTitleText("Appointment Time")
                                     .build()
 
