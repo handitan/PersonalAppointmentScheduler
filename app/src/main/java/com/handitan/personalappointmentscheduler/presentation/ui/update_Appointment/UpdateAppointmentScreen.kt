@@ -2,9 +2,9 @@ package com.handitan.personalappointmentscheduler.presentation.ui.update_Appoint
 
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -20,7 +20,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,14 +27,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,7 +63,9 @@ fun UpdateAppointmentScreen(
         },
         content = {
             Column(modifier = Modifier
-                .padding(it)) {
+                .fillMaxSize()
+                .padding(it),
+                horizontalAlignment = Alignment.CenterHorizontally) {
                 OutlinedTextField(
                     value = updateApptViewModel.currentApptViewData.description,
                     onValueChange = {
@@ -156,7 +156,9 @@ fun UpdateAppointmentScreen(
                     }
                 )
 
-                Button(onClick = {
+                Button(modifier = Modifier
+                    .padding(top = 10.dp),
+                    onClick = {
                     updateApptViewModel.updateAppointment()
                     navigateBack()
                 }) {
