@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.sharp.DateRange
@@ -60,104 +62,117 @@ fun AddAppointmentScreen(
             )
         },
         content = {
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .padding(it),
-                horizontalAlignment = Alignment.CenterHorizontally) {
-                OutlinedTextField(
-                    value = addApptViewModel.currentApptViewData.description,
-                    onValueChange = {
-                        Log.d("VALUE CHANGE:", it)
-                        addApptViewModel.updateDescription(it) },
-                    label = { Text(text = "Description") }
-                )
-
-
-                ExposedDropdownMenuBox(
-                    expanded = expanded,
-                    onExpandedChange = {expanded = !expanded}) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Column(
+                    modifier = Modifier
+                        .width(280.dp)
+                        .fillMaxHeight()
+                        .padding(it),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     OutlinedTextField(
-                        modifier = Modifier.menuAnchor(),
-                        readOnly = true,
-                        value = addApptViewModel.currentApptViewData.cityName,
-                        onValueChange = {},
-                        label = { Text(text = "City") },
-                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)})
+                        value = addApptViewModel.currentApptViewData.description,
+                        onValueChange = {
+                            Log.d("VALUE CHANGE:", it)
+                            addApptViewModel.updateDescription(it)
+                        },
+                        maxLines = 5,
+                        label = { Text(text = "Description") }
+                    )
 
-                    ExposedDropdownMenu(
+
+                    ExposedDropdownMenuBox(
                         expanded = expanded,
-                        onDismissRequest = { expanded = false}) {
-                        addApptViewModel.cityList.forEach {
-                                it ->
-                            DropdownMenuItem(
-                                text = { Text(text = it.name) },
-                                onClick = {
-                                    addApptViewModel.updateCityName(it.name)
-                                    expanded = false
-                                },
-                                contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
-                            )
+                        onExpandedChange = { expanded = !expanded }) {
+                        OutlinedTextField(
+                            modifier = Modifier.menuAnchor(),
+                            readOnly = true,
+                            value = addApptViewModel.currentApptViewData.cityName,
+                            onValueChange = {},
+                            label = { Text(text = "City") },
+                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) })
+
+                        ExposedDropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false }) {
+                            addApptViewModel.cityList.forEach { it ->
+                                DropdownMenuItem(
+                                    text = { Text(text = it.name) },
+                                    onClick = {
+                                        addApptViewModel.updateCityName(it.name)
+                                        expanded = false
+                                    },
+                                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                                )
+                            }
                         }
                     }
-                }
 
-                OutlinedTextField(
-                    value = addApptViewModel.savedDateStr,
-                    readOnly = true,
-                    onValueChange = {
-                        Log.d("VALUE CHANGE:", it)
-                    },
-                    label = { Text(text = "Appointment Date") },
-                    trailingIcon = {
-                        Icon(imageVector = Icons.Sharp.DateRange,
-                            contentDescription = "Date Picker",
-                            modifier = Modifier.clickable {
-                                val datePicker = MaterialDatePicker
-                                    .Builder
-                                    .datePicker()
-                                    .setTitleText("Appointment Date")
-                                    .build()
+                    OutlinedTextField(
+                        value = addApptViewModel.savedDateStr,
+                        readOnly = true,
+                        onValueChange = {
+                            Log.d("VALUE CHANGE:", it)
+                        },
+                        label = { Text(text = "Appointment Date") },
+                        trailingIcon = {
+                            Icon(imageVector = Icons.Sharp.DateRange,
+                                contentDescription = "Date Picker",
+                                modifier = Modifier.clickable {
+                                    val datePicker = MaterialDatePicker
+                                        .Builder
+                                        .datePicker()
+                                        .setTitleText("Appointment Date")
+                                        .build()
 
-                                datePicker.show(activity.supportFragmentManager,"DATE_PICKER")
-                                datePicker.addOnPositiveButtonClickListener {
-                                    addApptViewModel.updateAppointmentDate(it)
-                                    //Log.i("VALUE CHANGE", date)
-                                }
-                            })
+                                    datePicker.show(activity.supportFragmentManager, "DATE_PICKER")
+                                    datePicker.addOnPositiveButtonClickListener {
+                                        addApptViewModel.updateAppointmentDate(it)
+                                        //Log.i("VALUE CHANGE", date)
+                                    }
+                                })
+                        }
+                    )
+
+                    OutlinedTextField(
+                        value = if (addApptViewModel.currentApptViewData.timeHour == 0) "" else addApptViewModel.currentApptViewData.timeHour.toString() + ":" + addApptViewModel.currentApptViewData.timeMinute.toString(),
+                        readOnly = true,
+                        onValueChange = {
+                            Log.d("VALUE CHANGE:", it)
+                        },
+                        label = { Text(text = "Appointment Time") },
+                        trailingIcon = {
+                            Icon(imageVector = Icons.Sharp.Face,
+                                contentDescription = "Time Picker",
+                                modifier = Modifier.clickable {
+                                    val timePicker = MaterialTimePicker
+                                        .Builder()
+                                        .setTitleText("Appointment Time")
+                                        .build()
+
+                                    timePicker.show(activity.supportFragmentManager, "TIME_PICKER")
+                                    timePicker.addOnPositiveButtonClickListener {
+                                        addApptViewModel.updateAppointmentTime(
+                                            timePicker.hour,
+                                            timePicker.minute
+                                        )
+                                    }
+                                })
+                        }
+                    )
+
+                    Button(modifier = Modifier
+                        .padding(top = 10.dp),
+                        onClick = {
+                            addApptViewModel.addAppointment()
+                            navigateBack()
+                        }) {
+                        Text(text = "Add")
                     }
-                )
-
-                OutlinedTextField(
-                    value = if (addApptViewModel.currentApptViewData.timeHour == 0) "" else addApptViewModel.currentApptViewData.timeHour.toString() + ":" + addApptViewModel.currentApptViewData.timeMinute.toString(),
-                    readOnly = true,
-                    onValueChange = {
-                        Log.d("VALUE CHANGE:", it)
-                    },
-                    label = { Text(text = "Appointment Time") },
-                    trailingIcon = {
-                        Icon(imageVector = Icons.Sharp.Face,
-                            contentDescription = "Time Picker",
-                            modifier = Modifier.clickable {
-                                val timePicker = MaterialTimePicker
-                                    .Builder()
-                                    .setTitleText("Appointment Time")
-                                    .build()
-
-                                timePicker.show(activity.supportFragmentManager,"TIME_PICKER")
-                                timePicker.addOnPositiveButtonClickListener {
-                                    addApptViewModel.updateAppointmentTime(timePicker.hour,timePicker.minute)
-                                }
-                            })
-                    }
-                )
-
-                Button(modifier = Modifier
-                    .padding(top = 10.dp),
-                    onClick = {
-                    addApptViewModel.addAppointment()
-                    navigateBack()
-                }) {
-                    Text(text = "Add")
                 }
             }
         }

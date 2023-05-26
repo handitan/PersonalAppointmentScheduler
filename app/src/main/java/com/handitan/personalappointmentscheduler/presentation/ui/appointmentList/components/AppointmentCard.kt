@@ -36,13 +36,13 @@ fun AppointmentCard(
 
     Card(modifier = Modifier
         .fillMaxWidth()
-        .padding(5.dp)
+        .padding(top = 5.dp,start = 8.dp, end = 8.dp)
         .clickable {
             navigateToUpdateApptScreen(currentAppt.id)
         },
         elevation = CardDefaults.cardElevation()
     ) {
-        Column() {
+        Column(modifier = Modifier.padding(10.dp)) {
             Text(text = currentAppt.description,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis)

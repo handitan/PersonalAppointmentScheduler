@@ -46,7 +46,7 @@ fun SwipeToDeleteBackground(dismissState:DismissState) {
     Box (
         Modifier
             .fillMaxSize()
-            .padding(5.dp)
+            .padding(top = 5.dp, start = 15.dp, end = 5.dp)
             .background(color),
         contentAlignment = alignment
         ) {
