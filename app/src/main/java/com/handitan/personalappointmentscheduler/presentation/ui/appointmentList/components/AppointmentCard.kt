@@ -21,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.handitan.personalappointmentscheduler.core.Utilities
 import com.handitan.personalappointmentscheduler.data.model.AppointmentData
@@ -42,8 +43,11 @@ fun AppointmentCard(
         elevation = CardDefaults.cardElevation()
     ) {
         Column() {
-            Text(text = currentAppt.description)
-            Text(text = "Location: ${currentAppt.cityName}")
+            Text(text = currentAppt.description,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis)
+            Text(text = "Location: ${currentAppt.cityName}",
+                modifier = Modifier.padding(top = 5.dp))
             Text(text = "Date: ${Utilities.changeToDateString(currentAppt.date)}")
             Text(text = "Time: ${currentAppt.hour.toString() + ":" + currentAppt.minute.toString()}")
 //            IconButton(
