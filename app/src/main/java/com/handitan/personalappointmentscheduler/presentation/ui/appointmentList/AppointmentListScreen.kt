@@ -11,21 +11,29 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Button
+import androidx.compose.material3.DismissDirection
+import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.handitan.personalappointmentscheduler.data.model.Appointment
 import com.handitan.personalappointmentscheduler.data.model.AppointmentData
 import com.handitan.personalappointmentscheduler.presentation.ui.appointmentList.components.AppointmentCard
+import com.handitan.personalappointmentscheduler.presentation.ui.appointmentList.components.SwipeToDeleteBackground
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,13 +65,42 @@ fun AppointmentListScreen(
             LazyColumn(
                 modifier = Modifier
                     .padding(it)
-                    .fillMaxSize()
+                    //.fillMaxSize()
             ) {
-                items(appointmentListViewModel.appointmentList,key = { it.id }) {
-                    AppointmentCard(
-                        it,
-                        appointmentListViewModel::deleteAppointment,
-                        navigateToUpdateApptScreen)
+                items(appointmentListViewModel.appointmentList,
+                    key = { it.id }) {
+//                    AppointmentCard(
+//                        it,
+//                        appointmentListViewModel::deleteAppointment,
+//                        navigateToUpdateApptScreen)
+                    val currentAppt by rememberUpdatedState(newValue = it)
+                    val dismissState = rememberDismissState(
+                        confirmValueChange = {
+                            if (it.equals(DismissValue.DismissedToStart)) {
+                                appointmentListViewModel.deleteAppointment(currentAppt)
+                                true
+                            } else false
+                        }
+                    )
+
+                    SwipeToDismiss(
+                        state = dismissState,
+                        modifier = Modifier
+                            .padding(vertical = 1.dp),
+                            //.animateItemPlacement()
+                        background = {
+                            SwipeToDeleteBackground(dismissState)
+                        },
+                        dismissContent = {
+                            AppointmentCard(
+                                currentAppt,
+                                appointmentListViewModel::deleteAppointment,
+                                navigateToUpdateApptScreen)
+                        },
+                        directions = setOf(
+                            DismissDirection.EndToStart
+                        )
+                    )
                 }
             }
         }

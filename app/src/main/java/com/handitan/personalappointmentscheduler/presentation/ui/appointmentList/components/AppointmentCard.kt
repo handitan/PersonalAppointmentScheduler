@@ -35,7 +35,7 @@ fun AppointmentCard(
 
     Card(modifier = Modifier
         .fillMaxWidth()
-        .padding(15.dp)
+        .padding(5.dp)
         .clickable {
             navigateToUpdateApptScreen(currentAppt.id)
         },
@@ -43,70 +43,70 @@ fun AppointmentCard(
     ) {
         Column() {
             Text(text = currentAppt.description)
-            Text(text = currentAppt.cityName)
-            Text(text = Utilities.changeToDateString(currentAppt.date))
-            Text(text = currentAppt.hour.toString() + ":" + currentAppt.minute.toString())
-            IconButton(
-                onClick = {
-                    showDeleteApptDialog = true
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Delete,
-                    contentDescription = "Delete Appointment"
-                )
-            }
+            Text(text = "Location: ${currentAppt.cityName}")
+            Text(text = "Date: ${Utilities.changeToDateString(currentAppt.date)}")
+            Text(text = "Time: ${currentAppt.hour.toString() + ":" + currentAppt.minute.toString()}")
+//            IconButton(
+//                onClick = {
+//                    showDeleteApptDialog = true
+//                }
+//            ) {
+//                Icon(
+//                    imageVector = Icons.Filled.Delete,
+//                    contentDescription = "Delete Appointment"
+//                )
+//            }
         }
     }
 
-    if (showDeleteApptDialog) {
-        DeleteConfirmationAlertDialog(
-            currentAppt,
-            deleteAppt
-        ) {
-            showDeleteApptDialog = false
-        }
-    }
+//    if (showDeleteApptDialog) {
+//        DeleteConfirmationAlertDialog(
+//            currentAppt,
+//            deleteAppt
+//        ) {
+//            showDeleteApptDialog = false
+//        }
+//    }
 }
 
-@Composable
-fun DeleteConfirmationAlertDialog(
-    currentAppt:AppointmentData,
-    deleteAppt:(AppointmentData)->Unit,
-    resetShowDeleteApptDialogState:()->Unit
-) {
-    val openDialog = remember {mutableStateOf(true)}
-
-    val handleDialogClosed = {
-        openDialog.value = false
-        resetShowDeleteApptDialogState()
-    }
-
-    if (openDialog.value) {
-        AlertDialog(
-            onDismissRequest = {
-                handleDialogClosed()
-            },
-            title = {
-                Text(text = "Delete")
-            },
-            text = {
-                Text(text = "Continue to delete this appointment?")
-            },
-            confirmButton = {
-                TextButton(onClick = {
-                    openDialog.value = false
-                    deleteAppt(currentAppt)
-                }) {
-                    Text(text = "Confirm")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = {
-                    handleDialogClosed()
-                }) {
-                    Text(text = "Cancel")
-                }
-            })
-    }
-}
+//@Composable
+//fun DeleteConfirmationAlertDialog(
+//    currentAppt:AppointmentData,
+//    deleteAppt:(AppointmentData)->Unit,
+//    resetShowDeleteApptDialogState:()->Unit
+//) {
+//    val openDialog = remember {mutableStateOf(true)}
+//
+//    val handleDialogClosed = {
+//        openDialog.value = false
+//        resetShowDeleteApptDialogState()
+//    }
+//
+//    if (openDialog.value) {
+//        AlertDialog(
+//            onDismissRequest = {
+//                handleDialogClosed()
+//            },
+//            title = {
+//                Text(text = "Delete")
+//            },
+//            text = {
+//                Text(text = "Continue to delete this appointment?")
+//            },
+//            confirmButton = {
+//                TextButton(onClick = {
+//                    openDialog.value = false
+//                    deleteAppt(currentAppt)
+//                }) {
+//                    Text(text = "Confirm")
+//                }
+//            },
+//            dismissButton = {
+//                TextButton(onClick = {
+//                    handleDialogClosed()
+//                }) {
+//                    Text(text = "Cancel")
+//                }
+//            })
+//    }
+//}
