@@ -24,23 +24,23 @@ abstract class AppointmentSchedulerDb : RoomDatabase(){
             super.onCreate(db)
             instance?.let { database ->
                 scope.launch {
-                    val apptDao = database.AppointmentDao()
                     val cityDao = database.CityDao()
 
                     val city1 = City(0,"Austin")
                     val city2 = City(0,"Baltimore")
                     val city3 = City(0, "Cleveland")
                     val city4 = City(0,"Dallas")
+                    val city5 = City(0,"El Paso")
+                    val city6 = City(0,"Fresno")
+                    val city7 = City(0,"Georgetown")
                     cityDao.insert(city1)
                     cityDao.insert(city2)
                     cityDao.insert(city3)
                     cityDao.insert(city4)
+                    cityDao.insert(city5)
+                    cityDao.insert(city6)
+                    cityDao.insert(city7)
 
-                    val appt1 = Appointment(0,"Meeting with Mr Song",1,1684421609,2,30)
-                    val appt2 = Appointment(0,"Meeting with Mr Gong",2,1684421609,15,45)
-
-                    apptDao.insert(appt1)
-                    apptDao.insert(appt2)
                 }
 
             }
