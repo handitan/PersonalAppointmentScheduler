@@ -123,7 +123,7 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
             )
 
             OutlinedTextField(
-                value = if (addApptViewModel.currentApptViewData.timeHour == 0) "" else addApptViewModel.currentApptViewData.timeHour.toString() + ":" + addApptViewModel.currentApptViewData.timeMinute.toString(),
+                value = Utilities.convertTimeToString(addApptViewModel.currentApptViewData.timeHour,addApptViewModel.currentApptViewData.timeMinute),
                 readOnly = true,
                 onValueChange = {
                     Log.d("VALUE CHANGE:", it)
@@ -166,7 +166,6 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
             }
 
             if (showConfirmDialog) {
-                //TODO issue when opening the dialog 2nd time
                 ApptInputConfirmationDialog() {
                     showConfirmDialog = false
                 }

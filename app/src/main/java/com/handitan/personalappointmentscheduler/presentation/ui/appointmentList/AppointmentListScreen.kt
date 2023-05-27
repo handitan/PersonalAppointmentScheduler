@@ -89,7 +89,6 @@ fun AppointmentListScreen(
                         dismissContent = {
                             AppointmentCard(
                                 currentAppt,
-                                appointmentListViewModel::deleteAppointment,
                                 navigateToUpdateApptScreen)
                         },
                         directions = setOf(

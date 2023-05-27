@@ -120,7 +120,7 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
             )
 
             OutlinedTextField(
-                value = updateApptViewModel.currentApptViewData.timeHour.toString() + ":" + updateApptViewModel.currentApptViewData.timeMinute.toString(),
+                value = Utilities.convertTimeToString(updateApptViewModel.currentApptViewData.timeHour,updateApptViewModel.currentApptViewData.timeMinute),
                 readOnly = true,
                 onValueChange = {
                     Log.d("VALUE CHANGE:", it)

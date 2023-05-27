@@ -19,5 +19,15 @@ class Utilities {
                     !(apptDateStr.isBlank() && apptDateStr.isEmpty()) &&
                     !(apptHour == 0))
         }
+
+        fun convertTimeToString(hourVal:Int,minuteVal:Int):String {
+            if (hourVal == 0) return ""
+
+            if (minuteVal < 10) {
+                return "$hourVal:0$minuteVal"
+            } else {
+                return "$hourVal:$minuteVal"
+            }
+        }
     }
 }
