@@ -30,6 +30,9 @@ class AddAppointmentViewModel @Inject constructor(
     var savedDateStr by mutableStateOf("")
         private set
 
+    var doneAddingAppt by mutableStateOf(false)
+        private set
+
     fun getCities() {
         viewModelScope.launch(Dispatchers.IO) {
             val citiesData = repo.getCities()
@@ -55,6 +58,9 @@ class AddAppointmentViewModel @Inject constructor(
     fun addAppointment() {
         viewModelScope.launch(Dispatchers.IO) {
             repo.addAppointment(currentApptViewData.toAppointment())
+            withContext(Dispatchers.Main) {
+                doneAddingAppt = true
+            }
         }
     }
 
@@ -73,6 +79,10 @@ class AddAppointmentViewModel @Inject constructor(
             currentApptViewData =
                 currentApptViewData.copy(timeHour = hour, timeMinute = minute)
         }
+    }
+
+    fun resetDoneAddingAppt() {
+        doneAddingAppt = false
     }
 
 }

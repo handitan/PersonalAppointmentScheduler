@@ -42,6 +42,15 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                           navigateBack:()->Unit
 
 ) {
+    //This if statement was done to fix an issue where appt data is not being able
+    //to be listed because the timing between the data storing completion and
+    //listing the data
+    if (addApptViewModel.doneAddingAppt) {
+        addApptViewModel.resetDoneAddingAppt()
+        navigateBack()
+        return
+    }
+
     var showConfirmDialog by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
     val activity = LocalContext.current as AppCompatActivity
@@ -61,7 +70,6 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
             OutlinedTextField(
                 value = addApptViewModel.currentApptViewData.description,
                 onValueChange = {
-                    Log.d("VALUE CHANGE:", it)
                     addApptViewModel.updateDescription(it)
                 },
                 maxLines = 5,
@@ -99,9 +107,7 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
             OutlinedTextField(
                 value = addApptViewModel.savedDateStr,
                 readOnly = true,
-                onValueChange = {
-                    Log.d("VALUE CHANGE:", it)
-                },
+                onValueChange = {},
                 label = { Text(text = "Appointment Date") },
                 trailingIcon = {
                     Icon(imageVector = Icons.Sharp.DateRange,
@@ -116,7 +122,6 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                             datePicker.show(activity.supportFragmentManager, "DATE_PICKER")
                             datePicker.addOnPositiveButtonClickListener {
                                 addApptViewModel.updateAppointmentDate(it)
-                                //Log.i("VALUE CHANGE", date)
                             }
                         })
                 }
@@ -125,9 +130,7 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
             OutlinedTextField(
                 value = Utilities.convertTimeToString(addApptViewModel.currentApptViewData.timeHour,addApptViewModel.currentApptViewData.timeMinute),
                 readOnly = true,
-                onValueChange = {
-                    Log.d("VALUE CHANGE:", it)
-                },
+                onValueChange = {},
                 label = { Text(text = "Appointment Time") },
                 trailingIcon = {
                     Icon(imageVector = Icons.Sharp.Face,
@@ -157,7 +160,6 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                             addApptViewModel.savedDateStr,
                             addApptViewModel.currentApptViewData.timeHour)) {
                         addApptViewModel.addAppointment()
-                        navigateBack()
                     } else {
                         showConfirmDialog = true
                     }
