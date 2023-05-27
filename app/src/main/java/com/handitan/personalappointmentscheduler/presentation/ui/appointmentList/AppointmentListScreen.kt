@@ -1,5 +1,6 @@
 package com.handitan.personalappointmentscheduler.presentation.ui.appointmentList
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -35,7 +36,7 @@ import com.handitan.personalappointmentscheduler.data.model.AppointmentData
 import com.handitan.personalappointmentscheduler.presentation.ui.appointmentList.components.AppointmentCard
 import com.handitan.personalappointmentscheduler.presentation.ui.appointmentList.components.SwipeToDeleteBackground
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun AppointmentListScreen(
     appointmentListViewModel: AppointmentListViewModel = hiltViewModel(),
@@ -81,8 +82,8 @@ fun AppointmentListScreen(
                     SwipeToDismiss(
                         state = dismissState,
                         modifier = Modifier
-                            .padding(vertical = 1.dp),
-                            //.animateItemPlacement()
+                            .padding(vertical = 1.dp)
+                            .animateItemPlacement(),
                         background = {
                             SwipeToDeleteBackground(dismissState)
                         },
