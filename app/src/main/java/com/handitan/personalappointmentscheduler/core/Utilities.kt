@@ -12,5 +12,12 @@ class Utilities {
             }
             return sdf.format(dateVal)
         }
+
+        fun verifyApptFieldsFilledOut(description: String, cityName:String, apptDateStr:String, apptHour:Int):Boolean {
+            return (!(description.isBlank() && description.isEmpty()) &&
+                    !(cityName.isBlank() && cityName.isEmpty()) &&
+                    !(apptDateStr.isBlank() && apptDateStr.isEmpty()) &&
+                    !(apptHour == 0))
+        }
     }
 }

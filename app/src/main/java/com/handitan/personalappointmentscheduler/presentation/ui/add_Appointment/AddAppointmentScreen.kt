@@ -36,6 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
+import com.handitan.personalappointmentscheduler.core.Utilities
+import com.handitan.personalappointmentscheduler.presentation.ui.update_Appointment.components.ApptInputConfirmationDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,6 +49,7 @@ fun AddAppointmentScreen(
         addApptViewModel.getCities()
     }
 
+    var showConfirmDialog by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
     val activity = LocalContext.current as AppCompatActivity
 
@@ -168,10 +171,24 @@ fun AddAppointmentScreen(
                     Button(modifier = Modifier
                         .padding(top = 10.dp),
                         onClick = {
-                            addApptViewModel.addAppointment()
-                            navigateBack()
+                            if (Utilities.verifyApptFieldsFilledOut(addApptViewModel.currentApptViewData.description,
+                                    addApptViewModel.currentApptViewData.cityName,
+                                    addApptViewModel.savedDateStr,
+                                    addApptViewModel.currentApptViewData.timeHour)) {
+                                addApptViewModel.addAppointment()
+                                navigateBack()
+                            } else {
+                                showConfirmDialog = true
+                            }
                         }) {
                         Text(text = "Add")
+                    }
+
+                    if (showConfirmDialog) {
+                        //TODO issue when opening the dialog 2nd time
+                        ApptInputConfirmationDialog() {
+                            showConfirmDialog = false
+                        }
                     }
                 }
             }

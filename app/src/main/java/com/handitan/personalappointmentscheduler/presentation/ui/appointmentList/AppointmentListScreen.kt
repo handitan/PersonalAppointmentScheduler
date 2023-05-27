@@ -65,14 +65,9 @@ fun AppointmentListScreen(
             LazyColumn(
                 modifier = Modifier
                     .padding(it)
-                    //.fillMaxSize()
             ) {
                 items(appointmentListViewModel.appointmentList,
                     key = { it.id }) {
-//                    AppointmentCard(
-//                        it,
-//                        appointmentListViewModel::deleteAppointment,
-//                        navigateToUpdateApptScreen)
                     val currentAppt by rememberUpdatedState(newValue = it)
                     val dismissState = rememberDismissState(
                         confirmValueChange = {
