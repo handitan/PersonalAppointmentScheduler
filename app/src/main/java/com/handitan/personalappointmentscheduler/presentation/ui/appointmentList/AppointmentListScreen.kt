@@ -2,7 +2,9 @@ package com.handitan.personalappointmentscheduler.presentation.ui.appointmentLis
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -28,6 +30,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -63,39 +66,51 @@ fun AppointmentListScreen(
             }
         },
         content = {
-            LazyColumn(
-                modifier = Modifier
+            if (appointmentListViewModel.appointmentList.size == 0) {
+                Column(modifier = Modifier
                     .padding(it)
-            ) {
-                items(appointmentListViewModel.appointmentList,
-                    key = { it.id }) {
-                    val currentAppt by rememberUpdatedState(newValue = it)
-                    val dismissState = rememberDismissState(
-                        confirmValueChange = {
-                            if (it.equals(DismissValue.DismissedToStart)) {
-                                appointmentListViewModel.deleteAppointment(currentAppt)
-                                true
-                            } else false
-                        }
+                    .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = "No appointment is available"
                     )
-
-                    SwipeToDismiss(
-                        state = dismissState,
-                        modifier = Modifier
-                            .padding(vertical = 1.dp)
-                            .animateItemPlacement(),
-                        background = {
-                            SwipeToDeleteBackground(dismissState)
-                        },
-                        dismissContent = {
-                            AppointmentCard(
-                                currentAppt,
-                                navigateToUpdateApptScreen)
-                        },
-                        directions = setOf(
-                            DismissDirection.EndToStart
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(it)
+                ) {
+                    items(appointmentListViewModel.appointmentList,
+                        key = { it.id }) {
+                        val currentAppt by rememberUpdatedState(newValue = it)
+                        val dismissState = rememberDismissState(
+                            confirmValueChange = {
+                                if (it.equals(DismissValue.DismissedToStart)) {
+                                    appointmentListViewModel.deleteAppointment(currentAppt)
+                                    true
+                                } else false
+                            }
                         )
-                    )
+
+                        SwipeToDismiss(
+                            state = dismissState,
+                            modifier = Modifier
+                                .padding(vertical = 1.dp)
+                                .animateItemPlacement(),
+                            background = {
+                                SwipeToDeleteBackground(dismissState)
+                            },
+                            dismissContent = {
+                                AppointmentCard(
+                                    currentAppt,
+                                    navigateToUpdateApptScreen
+                                )
+                            },
+                            directions = setOf(
+                                DismissDirection.EndToStart
+                            )
+                        )
+                    }
                 }
             }
         }
