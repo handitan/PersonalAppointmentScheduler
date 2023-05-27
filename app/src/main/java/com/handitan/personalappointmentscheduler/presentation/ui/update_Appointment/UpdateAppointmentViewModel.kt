@@ -100,8 +100,4 @@ class UpdateAppointmentViewModel @Inject constructor(
         }
     }
 
-//    fun changeToDateString(selectedDateVal:Long) {
-//        val sdf = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
-//        savedDateStr = sdf.format(selectedDateVal)
-//    }
 }
