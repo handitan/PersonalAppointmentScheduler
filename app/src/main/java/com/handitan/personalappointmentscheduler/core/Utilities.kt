@@ -23,11 +23,22 @@ class Utilities {
         fun convertTimeToString(hourVal:Int,minuteVal:Int):String {
             if (hourVal == 0) return ""
 
+            var minuteStr = "$minuteVal"
             if (minuteVal < 10) {
-                return "$hourVal:0$minuteVal"
-            } else {
-                return "$hourVal:$minuteVal"
+                minuteStr = "0$minuteVal"
             }
+
+            var hourStr = "$hourVal"
+            if (hourVal > 12) {
+                hourStr = "${hourVal-12}"
+            }
+
+            var timeIndicator = "PM"
+            if (hourVal < 12) {
+                timeIndicator = "AM"
+            }
+
+            return "$hourStr:$minuteStr $timeIndicator"
         }
     }
 }
