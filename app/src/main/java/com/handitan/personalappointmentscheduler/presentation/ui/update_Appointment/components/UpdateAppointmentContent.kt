@@ -58,7 +58,6 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
             OutlinedTextField(
                 value = updateApptViewModel.currentApptViewData.description,
                 onValueChange = {
-                    Log.d("VALUE CHANGE:", it)
                     updateApptViewModel.updateDescription(it)
                 },
                 maxLines = 5,
@@ -95,9 +94,7 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
             OutlinedTextField(
                 value = updateApptViewModel.savedDateStr,
                 readOnly = true,
-                onValueChange = {
-                    Log.d("VALUE CHANGE:", it)
-                },
+                onValueChange = {},
                 label = { Text(text = "Appointment Date") },
                 trailingIcon = {
                     Icon(imageVector = Icons.Sharp.DateRange,
@@ -113,7 +110,6 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
                             datePicker.show(activity.supportFragmentManager, "DATE_PICKER")
                             datePicker.addOnPositiveButtonClickListener {
                                 updateApptViewModel.updateAppointmentDate(it)
-                                //Log.i("VALUE CHANGE", date)
                             }
                         })
                 }
@@ -122,9 +118,7 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
             OutlinedTextField(
                 value = Utilities.convertTimeToString(updateApptViewModel.currentApptViewData.timeHour,updateApptViewModel.currentApptViewData.timeMinute),
                 readOnly = true,
-                onValueChange = {
-                    Log.d("VALUE CHANGE:", it)
-                },
+                onValueChange = {},
                 label = { Text(text = "Appointment Time") },
                 trailingIcon = {
                     Icon(imageVector = Icons.Sharp.Face,

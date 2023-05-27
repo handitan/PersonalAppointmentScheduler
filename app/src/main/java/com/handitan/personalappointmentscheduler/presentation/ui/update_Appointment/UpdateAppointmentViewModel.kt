@@ -32,12 +32,6 @@ class UpdateAppointmentViewModel @Inject constructor(
     var savedDateStr by mutableStateOf("")
         private set
 
-//    var savedTimeHour by mutableStateOf("")
-//        private set
-//
-//    var savedTimeMinute by mutableStateOf("")
-//        private set
-
     fun getAppointment(apptId:Long) {
         viewModelScope.launch(Dispatchers.IO) {
             val apptData = repo.getAppointment(apptId)
