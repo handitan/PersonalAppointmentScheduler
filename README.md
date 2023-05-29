@@ -1,5 +1,9 @@
 # PersonalAppointmentScheduler
- 
+## Features:
+* CRUD operations for appointment
+* Swipe left for appointment deletion
+* Local database
+
 ## Android Architecture Components:
 * ViewModel
 * Navigation
