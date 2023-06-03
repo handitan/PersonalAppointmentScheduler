@@ -34,7 +34,7 @@ class AddAppointmentViewModel @Inject constructor(
         getCities()
     }
 
-    fun getCities() {
+    private fun getCities() {
         viewModelScope.launch(Dispatchers.IO) {
             val citiesData = repo.getCities()
             withContext(Dispatchers.Main) {

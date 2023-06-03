@@ -22,7 +22,6 @@ fun UpdateAppointmentScreen(
 ) {
     LaunchedEffect(Unit) {
         updateApptViewModel.getAppointment(apptId)
-        updateApptViewModel.getCities()
     }
 
     Scaffold(
