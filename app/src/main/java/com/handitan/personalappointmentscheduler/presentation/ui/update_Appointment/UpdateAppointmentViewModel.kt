@@ -32,6 +32,10 @@ class UpdateAppointmentViewModel @Inject constructor(
     var savedDateStr by mutableStateOf("")
         private set
 
+    init {
+        getCities()
+    }
+
     fun getAppointment(apptId:Long) {
         viewModelScope.launch(Dispatchers.IO) {
             val apptData = repo.getAppointment(apptId)
@@ -49,7 +53,7 @@ class UpdateAppointmentViewModel @Inject constructor(
         }
     }
 
-    fun getCities() {
+    private fun getCities() {
         viewModelScope.launch(Dispatchers.IO) {
             val citiesData = repo.getCities()
             withContext(Dispatchers.Main) {
