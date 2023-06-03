@@ -6,6 +6,7 @@ import com.handitan.personalappointmentscheduler.data.database.AppointmentSchedu
 import com.handitan.personalappointmentscheduler.data.model.Appointment
 import com.handitan.personalappointmentscheduler.data.model.AppointmentData
 import com.handitan.personalappointmentscheduler.data.model.City
+import kotlinx.coroutines.flow.Flow
 
 class AppointmentSchedulerRepositoryImpl(
     private val apptDao:AppointmentDao,
@@ -13,7 +14,7 @@ class AppointmentSchedulerRepositoryImpl(
     private val apptSchedulerDb: AppointmentSchedulerDb
 ) : AppointmentSchedulerRepository {
 
-    override suspend fun getAllAppointments():List<AppointmentData> {
+    override fun getAllAppointments():Flow<List<AppointmentData>> {
         return apptDao.getAppointments()
     }
 

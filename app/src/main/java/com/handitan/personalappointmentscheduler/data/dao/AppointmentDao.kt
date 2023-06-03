@@ -9,6 +9,7 @@ import com.handitan.personalappointmentscheduler.core.Constants.Companion.APPOIN
 import com.handitan.personalappointmentscheduler.core.Constants.Companion.CITY_TABLE
 import com.handitan.personalappointmentscheduler.data.model.Appointment
 import com.handitan.personalappointmentscheduler.data.model.AppointmentData
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AppointmentDao {
@@ -23,7 +24,7 @@ interface AppointmentDao {
             "FROM $APPOINTMENT_TABLE AS A " +
             "INNER JOIN $CITY_TABLE AS C " +
             "ON A.cityId = C.id")
-    fun getAppointments():List<AppointmentData>
+    fun getAppointments(): Flow<List<AppointmentData>>
 
     @Query("SELECT " +
             "A.id," +
