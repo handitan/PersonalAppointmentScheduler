@@ -42,14 +42,6 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                           navigateBack:()->Unit
 
 ) {
-    //This if statement was done to fix an issue where appt data is not being able
-    //to be listed because the timing between the data storing completion and
-    //listing the data
-    if (addApptViewModel.doneAddingAppt) {
-        addApptViewModel.resetDoneAddingAppt()
-        navigateBack()
-        return
-    }
 
     var showConfirmDialog by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
@@ -160,6 +152,7 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                             addApptViewModel.savedDateStr,
                             addApptViewModel.currentApptViewData.timeHour)) {
                         addApptViewModel.addAppointment()
+                        navigateBack()
                     } else {
                         showConfirmDialog = true
                     }

@@ -19,9 +19,6 @@ fun AddAppointmentScreen(
     addApptViewModel: AddAppointmentViewModel = hiltViewModel(),
     navigateBack:()->Unit
 ) {
-    LaunchedEffect(Unit) {
-        addApptViewModel.getCities()
-    }
 
     Scaffold(
         topBar = {
