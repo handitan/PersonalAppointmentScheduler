@@ -10,8 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 class AppointmentSchedulerRepositoryImpl(
     private val apptDao:AppointmentDao,
-    private val cityDao: CityDao,
-    private val apptSchedulerDb: AppointmentSchedulerDb
+    private val cityDao: CityDao
 ) : AppointmentSchedulerRepository {
 
     override fun getAllAppointments():Flow<List<AppointmentData>> {

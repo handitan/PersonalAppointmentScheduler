@@ -4,6 +4,7 @@ import android.content.Context
 import com.handitan.personalappointmentscheduler.data.dao.AppointmentDao
 import com.handitan.personalappointmentscheduler.data.dao.CityDao
 import com.handitan.personalappointmentscheduler.data.database.AppointmentSchedulerDb
+import com.handitan.personalappointmentscheduler.data.database.TestAppointmentSchedulerDb
 import com.handitan.personalappointmentscheduler.data.repository.AppointmentSchedulerRepository
 import com.handitan.personalappointmentscheduler.data.repository.AppointmentSchedulerRepositoryImpl
 import dagger.Module
@@ -17,19 +18,19 @@ import kotlinx.coroutines.SupervisorJob
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppModule {
+class TestAppModule {
     @Provides
-    fun provideApptSchedulerDb(@ApplicationContext context:Context):AppointmentSchedulerDb {
-        return AppointmentSchedulerDb.getInstance(context, CoroutineScope(SupervisorJob()+Dispatchers.Default) )
+    fun provideApptSchedulerDb(@ApplicationContext context:Context):TestAppointmentSchedulerDb {
+        return TestAppointmentSchedulerDb.getInstance(context, CoroutineScope(SupervisorJob()+Dispatchers.Default) )
     }
 
     @Provides
-    fun provideAppointmentDao(apptSchedulerDb:AppointmentSchedulerDb):AppointmentDao {
+    fun provideAppointmentDao(apptSchedulerDb:TestAppointmentSchedulerDb):AppointmentDao {
         return apptSchedulerDb.AppointmentDao()
     }
 
     @Provides
-    fun provideCityDao(apptSchedulerDb: AppointmentSchedulerDb):CityDao {
+    fun provideCityDao(apptSchedulerDb: TestAppointmentSchedulerDb):CityDao {
         return apptSchedulerDb.CityDao()
     }
 

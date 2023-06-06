@@ -24,9 +24,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.handitan.personalappointmentscheduler.core.Constants
 import com.handitan.personalappointmentscheduler.presentation.ui.appointmentList.components.AppointmentCard
 import com.handitan.personalappointmentscheduler.presentation.ui.appointmentList.components.SwipeToDeleteBackground
 
@@ -63,7 +65,7 @@ fun AppointmentListScreen(
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(
+                    Text(modifier = Modifier.testTag(Constants.NOAPPOINTMENT_TESTTAG),
                         text = "No appointment is available"
                     )
                 }
