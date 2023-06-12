@@ -1,6 +1,5 @@
 package com.handitan.personalappointmentscheduler.presentation.ui.add_Appointment.components
 
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -18,7 +17,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,9 +29,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
+import com.handitan.personalappointmentscheduler.core.TestTags
 import com.handitan.personalappointmentscheduler.core.Utilities
 import com.handitan.personalappointmentscheduler.presentation.ui.add_Appointment.AddAppointmentViewModel
 import com.handitan.personalappointmentscheduler.presentation.ui.update_Appointment.components.ApptInputConfirmationDialog
@@ -46,9 +51,19 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
     var showConfirmDialog by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
     val activity = LocalContext.current as AppCompatActivity
+    val outlineTextFieldColor = OutlinedTextFieldDefaults.colors(
+        disabledTextColor = MaterialTheme.colorScheme.onSurface,
+        disabledBorderColor = MaterialTheme.colorScheme.outline,
+        disabledLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        disabledTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        //For Icons
+        disabledPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
 
     Column(
         modifier = Modifier
+            .testTag(TestTags.ADDAPPOINTMENTSCREEN)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -83,7 +98,7 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                 ExposedDropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false }) {
-                    addApptViewModel.cityList.forEach { it ->
+                    addApptViewModel.cityList.forEach {
                         DropdownMenuItem(
                             text = { Text(text = it.name) },
                             onClick = {
@@ -96,56 +111,64 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                 }
             }
 
+
             OutlinedTextField(
                 value = addApptViewModel.savedDateStr,
+                modifier = Modifier.clickable (onClick = {
+                    val datePicker = MaterialDatePicker
+                        .Builder
+                        .datePicker()
+                        .setTitleText("Appointment Date")
+                        .build()
+
+                    datePicker.show(activity.supportFragmentManager, "DATE_PICKER")
+                    datePicker.addOnPositiveButtonClickListener {
+                        addApptViewModel.updateAppointmentDate(it)
+                    }
+                }),
                 readOnly = true,
+                enabled = false,
                 onValueChange = {},
                 label = { Text(text = "Appointment Date") },
+                colors = outlineTextFieldColor,
                 trailingIcon = {
                     Icon(imageVector = Icons.Sharp.DateRange,
-                        contentDescription = "Date Picker",
-                        modifier = Modifier.clickable {
-                            val datePicker = MaterialDatePicker
-                                .Builder
-                                .datePicker()
-                                .setTitleText("Appointment Date")
-                                .build()
-
-                            datePicker.show(activity.supportFragmentManager, "DATE_PICKER")
-                            datePicker.addOnPositiveButtonClickListener {
-                                addApptViewModel.updateAppointmentDate(it)
-                            }
-                        })
+                        contentDescription = "Date Picker")
                 }
             )
 
             OutlinedTextField(
                 value = Utilities.convertTimeToString(addApptViewModel.currentApptViewData.timeHour,addApptViewModel.currentApptViewData.timeMinute),
+                modifier = Modifier.clickable (onClick = {
+                    val timePicker = MaterialTimePicker
+                        .Builder()
+                        .setTitleText("Appointment Time")
+                        .build()
+
+                    timePicker.show(activity.supportFragmentManager, "TIME_PICKER")
+                    timePicker.addOnPositiveButtonClickListener {
+                        addApptViewModel.updateAppointmentTime(
+                            timePicker.hour,
+                            timePicker.minute
+                        )
+                    }
+                }),
                 readOnly = true,
+                enabled = false,
                 onValueChange = {},
                 label = { Text(text = "Appointment Time") },
+                colors = outlineTextFieldColor,
                 trailingIcon = {
                     Icon(imageVector = Icons.Sharp.Face,
-                        contentDescription = "Time Picker",
-                        modifier = Modifier.clickable {
-                            val timePicker = MaterialTimePicker
-                                .Builder()
-                                .setTitleText("Appointment Time")
-                                .build()
-
-                            timePicker.show(activity.supportFragmentManager, "TIME_PICKER")
-                            timePicker.addOnPositiveButtonClickListener {
-                                addApptViewModel.updateAppointmentTime(
-                                    timePicker.hour,
-                                    timePicker.minute
-                                )
-                            }
-                        })
+                        contentDescription = "Time Picker")
                 }
             )
 
             Button(modifier = Modifier
-                .padding(top = 10.dp),
+                .padding(top = 10.dp)
+                .semantics {
+                           contentDescription = "Add New Appointment"
+                },
                 onClick = {
                     if (Utilities.verifyApptFieldsFilledOut(addApptViewModel.currentApptViewData.description,
                             addApptViewModel.currentApptViewData.cityName,
@@ -161,7 +184,7 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
             }
 
             if (showConfirmDialog) {
-                ApptInputConfirmationDialog() {
+                ApptInputConfirmationDialog {
                     showConfirmDialog = false
                 }
             }
