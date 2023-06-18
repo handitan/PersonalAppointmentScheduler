@@ -108,11 +108,17 @@ class AppointmentEndToEndTest {
         }
     }
 
+    @Test
+    fun test1_addApptWithoutAllFieldsFilledOut_checkErrorDisplayOnConfirm() {
+        composeTestRule.onNodeWithTag(TestTags.ADDAPPOINTMENTBTN).performClick()
+        composeTestRule.onNodeWithContentDescription("Add New Appointment").performClick()
+        composeTestRule.onNodeWithText("Please fill out all the fields").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Confirm Error Dialog").performClick()
+    }
+
     @OptIn(ExperimentalTestApi::class)
     @Test
-    fun test1_AddNewAppt_checkNewAppt() {
-
-        //val testDescription = "Test Content 123456"
+    fun test2_AddNewAppt_checkNewAppt() {
         val testCityName = "Dallas"
         val currentDateTime = Calendar.getInstance().time
         val sdf = SimpleDateFormat("E, LLL dd", Locale.getDefault()).apply {
@@ -128,7 +134,6 @@ class AppointmentEndToEndTest {
 
         composeTestRule.onNodeWithTag(TestTags.NOAPPOINTMENT).assertIsDisplayed()
 
-        //composeTestRule.mainClock.
         // Add btn to lead add appointment screen
         composeTestRule.onNodeWithTag(TestTags.ADDAPPOINTMENTBTN).performClick()
 
@@ -136,7 +141,6 @@ class AppointmentEndToEndTest {
         composeTestRule.onNodeWithContentDescription("City").performClick()
         composeTestRule.onNodeWithText(testCityName).performClick()
 
-        //composeTestRule.mainClock.advanceTimeBy(50000)
         composeTestRule.onNodeWithContentDescription("Appointment Date").performClick()
 
         onView(withId(com.google.android.material.R.id.date_picker_actions))
@@ -177,7 +181,7 @@ class AppointmentEndToEndTest {
 
     @OptIn(ExperimentalTestApi::class)
     @Test
-    fun test2_addNewAppt_editThatAppt() {
+    fun test3_addNewAppt_editThatAppt() {
         val testDescription = "Test Content 789"
         val testCityName = "Austin"
         val currentDateTime = Calendar.getInstance().time
@@ -192,7 +196,6 @@ class AppointmentEndToEndTest {
         val testCurrentDateApptFormatted = sdf2.format(currentDateTime)
         val testCurrTimeApptFormatted = "6:30 PM"
 
-        //composeTestRule.mainClock.
         // Add btn to lead add appointment screen
         composeTestRule.onNodeWithTag(TestTags.ADDAPPOINTMENTBTN).performClick()
 
@@ -200,7 +203,6 @@ class AppointmentEndToEndTest {
         composeTestRule.onNodeWithContentDescription("City").performClick()
         composeTestRule.onNodeWithText(testCityName).performClick()
 
-        //composeTestRule.mainClock.advanceTimeBy(50000)
         composeTestRule.onNodeWithContentDescription("Appointment Date").performClick()
 
         onView(withId(com.google.android.material.R.id.date_picker_actions))
@@ -211,7 +213,7 @@ class AppointmentEndToEndTest {
 
 
         //You can see The View Hierarchy to see what it really looks like
-        //If it's today's date, it will have a prefix word "Today."
+        //If it's today's date, it will have a prefix word "Today "
         onView(withContentDescription("Today $testCurrDateStr")).perform(click())
 
         onView(withId(com.google.android.material.R.id.confirm_button)).perform(click())
@@ -238,7 +240,7 @@ class AppointmentEndToEndTest {
 
         //=======================================
         // Do edit with the new created appt
-        //composeTestRule.onNodeWithText(testDescription).assertIsDisplayed()
+        //=======================================
         composeTestRule.onNodeWithText(testDescription).performClick()
 
         val testDescription2 = "Test Content 101112"
@@ -252,7 +254,6 @@ class AppointmentEndToEndTest {
 
         val testPrevDateApptFormatted = sdf2.format(previousDateTime)
         val testCurrTimeApptFormatted2 = "8:45 PM"
-
 
         composeTestRule.onNodeWithContentDescription("Description").performTextClearance()
         composeTestRule.onNodeWithContentDescription("Description").performTextInput(testDescription2)
@@ -270,7 +271,7 @@ class AppointmentEndToEndTest {
 
 
         //You can see The View Hierarchy to see what it really looks like
-        //If it's today's date, it will have a prefix word "Today."
+        //If it's today's date, it will have a prefix word "Today ."
         onView(withContentDescription(testPrevDateStr)).perform(click())
 
         onView(withId(com.google.android.material.R.id.confirm_button)).perform(click())
@@ -294,12 +295,19 @@ class AppointmentEndToEndTest {
         composeTestRule.waitUntilAtLeastOneExists(hasText("Location: $testCityName2"))
         composeTestRule.waitUntilAtLeastOneExists(hasText("Date: $testPrevDateApptFormatted"))
         composeTestRule.waitUntilAtLeastOneExists(hasText("Time: $testCurrTimeApptFormatted2"))
-
-        //composeTestRule.waitUntilAtLeastOneExists(hasText("Time: 22"),10000)
     }
 
     @Test
-    fun test3_removeExistingAppt_checkItDoesNotExist() {
+    fun test4_editExistingApptClearAField_checkErrorDisplayOnConfirm() {
+        composeTestRule.onNodeWithText(testDescription).performClick()
+        composeTestRule.onNodeWithContentDescription("Description").performTextClearance()
+        composeTestRule.onNodeWithContentDescription("Update Appointment").performClick()
+        composeTestRule.onNodeWithText("Please fill out all the fields").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Confirm Error Dialog").performClick()
+    }
+
+    @Test
+    fun test5_removeExistingAppt_checkItDoesNotExist() {
         composeTestRule.onNodeWithText(testDescription).performTouchInput {
             swipeLeft()
         }
