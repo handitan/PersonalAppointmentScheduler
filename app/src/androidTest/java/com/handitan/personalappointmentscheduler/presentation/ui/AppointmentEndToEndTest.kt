@@ -3,6 +3,7 @@ package com.handitan.personalappointmentscheduler.presentation.ui
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -11,6 +12,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeLeft
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -48,6 +51,8 @@ import java.util.TimeZone
 @UninstallModules(AppModule::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class AppointmentEndToEndTest {
+
+    private val testDescription = "Test Content 123456"
 
     @get:Rule(order=0)
     val hiltRule = HiltAndroidRule(this)
@@ -107,7 +112,7 @@ class AppointmentEndToEndTest {
     @Test
     fun test1_AddNewAppt_checkNewAppt() {
 
-        val testDescription = "Test Content 123456"
+        //val testDescription = "Test Content 123456"
         val testCityName = "Dallas"
         val currentDateTime = Calendar.getInstance().time
         val sdf = SimpleDateFormat("E, LLL dd", Locale.getDefault()).apply {
@@ -291,7 +296,13 @@ class AppointmentEndToEndTest {
         composeTestRule.waitUntilAtLeastOneExists(hasText("Time: $testCurrTimeApptFormatted2"))
 
         //composeTestRule.waitUntilAtLeastOneExists(hasText("Time: 22"),10000)
+    }
 
-
+    @Test
+    fun test3_removeExistingAppt_checkItDoesNotExist() {
+        composeTestRule.onNodeWithText(testDescription).performTouchInput {
+            swipeLeft()
+        }
+        composeTestRule.onNodeWithText(testDescription).assertIsNotDisplayed()
     }
 }
