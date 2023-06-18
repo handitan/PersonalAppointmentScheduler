@@ -72,6 +72,8 @@ dependencies {
     androidTestImplementation 'com.google.dagger:hilt-android-testing:2.44'
     // ...with Kotlin.
     kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.44'
+    // For end to end testing
+    implementation 'androidx.test.espresso:espresso-contrib:3.5.1'
 
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
@@ -89,6 +91,8 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
 
+    //def fragment_version = "1.5.7"
+    //debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
     //Test libraries
     //androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.4.3"
     //debugImplementation "androidx.compose.ui:ui-test-manifest:1.4.3"
