@@ -1,13 +1,9 @@
 package com.handitan.personalappointmentscheduler.presentation.ui
 
-import android.util.Log
-import android.widget.DatePicker
-import android.widget.TimePicker
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
@@ -15,32 +11,18 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.testing.launchFragment
-import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.matcher.RootMatchers
-import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withClassName
 import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.textview.MaterialTextView
 import com.handitan.personalappointmentscheduler.MainActivity
 import com.handitan.personalappointmentscheduler.core.TestTags
 import com.handitan.personalappointmentscheduler.data.di.AppModule
@@ -51,13 +33,10 @@ import com.handitan.personalappointmentscheduler.presentation.ui.update_Appointm
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.instanceOf
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.OrderWith
 import org.junit.runners.MethodSorters
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -287,7 +266,7 @@ class AppointmentEndToEndTest {
 
         //You can see The View Hierarchy to see what it really looks like
         //If it's today's date, it will have a prefix word "Today."
-        onView(withContentDescription("$testPrevDateStr")).perform(click())
+        onView(withContentDescription(testPrevDateStr)).perform(click())
 
         onView(withId(com.google.android.material.R.id.confirm_button)).perform(click())
         composeTestRule.onNodeWithContentDescription("Appointment Time").performClick()
