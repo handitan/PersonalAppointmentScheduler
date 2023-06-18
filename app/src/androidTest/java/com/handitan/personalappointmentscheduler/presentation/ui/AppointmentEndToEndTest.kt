@@ -1,5 +1,7 @@
 package com.handitan.personalappointmentscheduler.presentation.ui
 
+import com.handitan.personalappointmentscheduler.R
+import android.content.Context
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
@@ -26,6 +28,7 @@ import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.platform.app.InstrumentationRegistry
 import com.handitan.personalappointmentscheduler.MainActivity
 import com.handitan.personalappointmentscheduler.core.TestTags
 import com.handitan.personalappointmentscheduler.data.di.AppModule
@@ -53,6 +56,7 @@ import java.util.TimeZone
 class AppointmentEndToEndTest {
 
     private val testDescription = "Test Content 123456"
+    private val instrumentationContext: Context = InstrumentationRegistry.getInstrumentation().targetContext
 
     @get:Rule(order=0)
     val hiltRule = HiltAndroidRule(this)
@@ -111,7 +115,7 @@ class AppointmentEndToEndTest {
     @Test
     fun test1_addApptWithoutAllFieldsFilledOut_checkErrorDisplayOnConfirm() {
         composeTestRule.onNodeWithTag(TestTags.ADDAPPOINTMENTBTN).performClick()
-        composeTestRule.onNodeWithContentDescription("Add New Appointment").performClick()
+        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.contentdesc_add_new_appt)).performClick()
         composeTestRule.onNodeWithText("Please fill out all the fields").assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Confirm Error Dialog").performClick()
     }
@@ -137,8 +141,8 @@ class AppointmentEndToEndTest {
         // Add btn to lead add appointment screen
         composeTestRule.onNodeWithTag(TestTags.ADDAPPOINTMENTBTN).performClick()
 
-        composeTestRule.onNodeWithContentDescription("Description").performTextInput(testDescription)
-        composeTestRule.onNodeWithContentDescription("City").performClick()
+        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.contentdesc_appt_description)).performTextInput(testDescription)
+        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.contentdesc_appt_city)).performClick()
         composeTestRule.onNodeWithText(testCityName).performClick()
 
         composeTestRule.onNodeWithContentDescription("Appointment Date").performClick()
@@ -170,7 +174,7 @@ class AppointmentEndToEndTest {
         onView(withContentDescription("30 minutes")).perform(click())
         onView(withId(com.google.android.material.R.id.material_timepicker_ok_button)).perform(click())
 
-        composeTestRule.onNodeWithContentDescription("Add New Appointment").performClick()
+        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.contentdesc_add_new_appt)).performClick()
 
         composeTestRule.waitUntilAtLeastOneExists(hasText(testDescription))
         composeTestRule.waitUntilAtLeastOneExists(hasText("Location: $testCityName"))
@@ -231,7 +235,7 @@ class AppointmentEndToEndTest {
         onView(withContentDescription("30 minutes")).perform(click())
         onView(withId(com.google.android.material.R.id.material_timepicker_ok_button)).perform(click())
 
-        composeTestRule.onNodeWithContentDescription("Add New Appointment").performClick()
+        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.contentdesc_add_new_appt)).performClick()
 
         composeTestRule.waitUntilAtLeastOneExists(hasText(testDescription))
         composeTestRule.waitUntilAtLeastOneExists(hasText("Location: $testCityName"))

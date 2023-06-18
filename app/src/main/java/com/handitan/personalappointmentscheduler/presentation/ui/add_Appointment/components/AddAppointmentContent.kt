@@ -1,5 +1,6 @@
 package com.handitan.personalappointmentscheduler.presentation.ui.add_Appointment.components
 
+import android.provider.Settings.System.getString
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
+import com.handitan.personalappointmentscheduler.R
 import com.handitan.personalappointmentscheduler.core.TestTags
 import com.handitan.personalappointmentscheduler.core.Utilities
 import com.handitan.personalappointmentscheduler.presentation.ui.add_Appointment.AddAppointmentViewModel
@@ -76,7 +78,7 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
         ) {
             OutlinedTextField(
                 modifier = Modifier.semantics {
-                  contentDescription = "Description"
+                  contentDescription = activity.getString(R.string.contentdesc_appt_description)
                 },
                 value = addApptViewModel.currentApptViewData.description,
                 onValueChange = {
@@ -129,18 +131,18 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                     .semantics {
                         contentDescription = "Appointment Date"
                     }
-                    .clickable (onClick = {
-                    val datePicker = MaterialDatePicker
-                        .Builder
-                        .datePicker()
-                        .setTitleText("Appointment Date")
-                        .build()
+                    .clickable(onClick = {
+                        val datePicker = MaterialDatePicker
+                            .Builder
+                            .datePicker()
+                            .setTitleText("Appointment Date")
+                            .build()
 
-                    datePicker.show(activity.supportFragmentManager, "DATE_PICKER")
-                    datePicker.addOnPositiveButtonClickListener {
-                        addApptViewModel.updateAppointmentDate(it)
-                    }
-                }),
+                        datePicker.show(activity.supportFragmentManager, "DATE_PICKER")
+                        datePicker.addOnPositiveButtonClickListener {
+                            addApptViewModel.updateAppointmentDate(it)
+                        }
+                    }),
                 readOnly = true,
                 enabled = false,
                 onValueChange = {},
@@ -158,20 +160,20 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                     .semantics {
                         contentDescription = "Appointment Time"
                     }
-                    .clickable (onClick = {
-                    val timePicker = MaterialTimePicker
-                        .Builder()
-                        .setTitleText("Appointment Time")
-                        .build()
+                    .clickable(onClick = {
+                        val timePicker = MaterialTimePicker
+                            .Builder()
+                            .setTitleText("Appointment Time")
+                            .build()
 
-                    timePicker.show(activity.supportFragmentManager, "TIME_PICKER")
-                    timePicker.addOnPositiveButtonClickListener {
-                        addApptViewModel.updateAppointmentTime(
-                            timePicker.hour,
-                            timePicker.minute
-                        )
-                    }
-                }),
+                        timePicker.show(activity.supportFragmentManager, "TIME_PICKER")
+                        timePicker.addOnPositiveButtonClickListener {
+                            addApptViewModel.updateAppointmentTime(
+                                timePicker.hour,
+                                timePicker.minute
+                            )
+                        }
+                    }),
                 readOnly = true,
                 enabled = false,
                 onValueChange = {},
@@ -186,7 +188,7 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
             Button(modifier = Modifier
                 .padding(top = 10.dp)
                 .semantics {
-                           contentDescription = "Add New Appointment"
+                    contentDescription = activity.getString(R.string.contentdesc_add_new_appt)
                 },
                 onClick = {
                     if (Utilities.verifyApptFieldsFilledOut(addApptViewModel.currentApptViewData.description,
