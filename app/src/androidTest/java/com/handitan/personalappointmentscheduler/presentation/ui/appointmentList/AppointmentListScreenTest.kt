@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.handitan.personalappointmentscheduler.MainActivity
 import com.handitan.personalappointmentscheduler.core.Constants
+import com.handitan.personalappointmentscheduler.core.TestTags
 import com.handitan.personalappointmentscheduler.data.di.AppModule
 import com.handitan.personalappointmentscheduler.navigation.Screen
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -55,7 +56,7 @@ class AppointmentListScreenTest {
 
     @Test
     fun mainScreen_NoAppointment_isVisible() {
-        composeTestRule.onNodeWithTag(Constants.NOAPPOINTMENT_TESTTAG).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(TestTags.NOAPPOINTMENT).assertIsDisplayed()
     }
 
 }

@@ -75,6 +75,9 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
+                modifier = Modifier.semantics {
+                  contentDescription = "Description"
+                },
                 value = addApptViewModel.currentApptViewData.description,
                 onValueChange = {
                     addApptViewModel.updateDescription(it)
@@ -85,10 +88,15 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
 
 
             ExposedDropdownMenuBox(
+                modifier = Modifier
+                    .semantics {
+                        contentDescription = "City"
+                    },
                 expanded = expanded,
                 onExpandedChange = { expanded = !expanded }) {
                 OutlinedTextField(
-                    modifier = Modifier.menuAnchor(),
+                    modifier = Modifier
+                        .menuAnchor(),
                     readOnly = true,
                     value = addApptViewModel.currentApptViewData.cityName,
                     onValueChange = {},
@@ -100,6 +108,9 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                     onDismissRequest = { expanded = false }) {
                     addApptViewModel.cityList.forEach {
                         DropdownMenuItem(
+                            modifier = Modifier.semantics {
+                               contentDescription = "CityName"
+                            },
                             text = { Text(text = it.name) },
                             onClick = {
                                 addApptViewModel.updateCityName(it.name)
@@ -114,7 +125,11 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
 
             OutlinedTextField(
                 value = addApptViewModel.savedDateStr,
-                modifier = Modifier.clickable (onClick = {
+                modifier = Modifier
+                    .semantics {
+                        contentDescription = "Appointment Date"
+                    }
+                    .clickable (onClick = {
                     val datePicker = MaterialDatePicker
                         .Builder
                         .datePicker()
@@ -139,7 +154,11 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
 
             OutlinedTextField(
                 value = Utilities.convertTimeToString(addApptViewModel.currentApptViewData.timeHour,addApptViewModel.currentApptViewData.timeMinute),
-                modifier = Modifier.clickable (onClick = {
+                modifier = Modifier
+                    .semantics {
+                        contentDescription = "Appointment Time"
+                    }
+                    .clickable (onClick = {
                     val timePicker = MaterialTimePicker
                         .Builder()
                         .setTitleText("Appointment Time")

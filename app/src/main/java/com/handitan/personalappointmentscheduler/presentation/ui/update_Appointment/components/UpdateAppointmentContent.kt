@@ -31,6 +31,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -70,6 +72,9 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
         ) {
 
             OutlinedTextField(
+                modifier = Modifier.semantics {
+                    contentDescription = "Description"
+                },
                 value = updateApptViewModel.currentApptViewData.description,
                 onValueChange = {
                     updateApptViewModel.updateDescription(it)
@@ -79,6 +84,10 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
             )
 
             ExposedDropdownMenuBox(
+                modifier = Modifier
+                    .semantics {
+                        contentDescription = "City"
+                    },
                 expanded = expanded,
                 onExpandedChange = { expanded = !expanded }) {
                 OutlinedTextField(
@@ -94,6 +103,9 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
                     onDismissRequest = { expanded = false }) {
                     updateApptViewModel.cityList.forEach { it ->
                         DropdownMenuItem(
+                            modifier = Modifier.semantics {
+                                contentDescription = "CityName"
+                            },
                             text = { Text(text = it.name) },
                             onClick = {
                                 updateApptViewModel.updateCityName(it.name)
@@ -107,7 +119,11 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
 
             OutlinedTextField(
                 value = updateApptViewModel.savedDateStr,
-                modifier = Modifier.clickable (onClick = {
+                modifier = Modifier
+                    .semantics {
+                        contentDescription = "Appointment Date"
+                    }
+                    .clickable (onClick = {
                     val datePicker = MaterialDatePicker
                         .Builder
                         .datePicker()
@@ -133,7 +149,11 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
 
             OutlinedTextField(
                 value = Utilities.convertTimeToString(updateApptViewModel.currentApptViewData.timeHour,updateApptViewModel.currentApptViewData.timeMinute),
-                modifier = Modifier.clickable {
+                modifier = Modifier
+                    .semantics {
+                        contentDescription = "Appointment Time"
+                    }
+                    .clickable {
                     val timePicker = MaterialTimePicker
                         .Builder()
                         .setHour(updateApptViewModel.currentApptViewData.timeHour)
@@ -161,7 +181,10 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
             )
 
             Button(modifier = Modifier
-                .padding(top = 10.dp),
+                .padding(top = 10.dp)
+                .semantics {
+                    contentDescription = "Update Appointment"
+                },
                 onClick = {
                     if (Utilities.verifyApptFieldsFilledOut(updateApptViewModel.currentApptViewData.description,
                             updateApptViewModel.currentApptViewData.cityName,

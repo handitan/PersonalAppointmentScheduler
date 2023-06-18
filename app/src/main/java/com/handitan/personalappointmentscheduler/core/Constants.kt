@@ -10,7 +10,5 @@ class Constants {
         const val ALLAPPOINTMENT_SCREEN = "AllAppointmentScreen"
         const val ADDAPPOINTMENT_SCREEN = "AddAppointmentScreen"
         const val UPDATEAPPOINTMENT_SCREEN = "UpdateAppointmentScreen"
-
-        const val NOAPPOINTMENT_TESTTAG = "NoApptTestTag"
     }
 }

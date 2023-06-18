@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.handitan.personalappointmentscheduler.core.Constants
+import com.handitan.personalappointmentscheduler.core.TestTags
 import com.handitan.personalappointmentscheduler.presentation.ui.appointmentList.components.AppointmentCard
 import com.handitan.personalappointmentscheduler.presentation.ui.appointmentList.components.SwipeToDeleteBackground
 
@@ -47,9 +48,12 @@ fun AppointmentListScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = {}) {
-                IconButton(onClick = {
-                    navigateToAddApptScreen()
+            FloatingActionButton(
+                modifier = Modifier.testTag(TestTags.ADDAPPOINTMENTBTN),
+                onClick = {}) {
+                IconButton(
+                    onClick = {
+                        navigateToAddApptScreen()
                 }) {
                     Icon(Icons.Filled.Add, contentDescription = "Add")
                 }
@@ -65,7 +69,7 @@ fun AppointmentListScreen(
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(modifier = Modifier.testTag(Constants.NOAPPOINTMENT_TESTTAG),
+                    Text(modifier = Modifier.testTag(TestTags.NOAPPOINTMENT),
                         text = "No appointment is available"
                     )
                 }
