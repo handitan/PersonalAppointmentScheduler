@@ -54,7 +54,8 @@ import java.util.TimeZone
 class AppointmentEndToEndTest {
 
     private val testDescription = "Test Content 123456"
-    private val instrumentationContext: Context = InstrumentationRegistry.getInstrumentation().targetContext
+    // Context of the app under test.
+    private val appContext: Context = InstrumentationRegistry.getInstrumentation().targetContext
 
     @get:Rule(order=0)
     val hiltRule = HiltAndroidRule(this)
@@ -111,16 +112,21 @@ class AppointmentEndToEndTest {
     }
 
     @Test
-    fun test1_addApptWithoutAllFieldsFilledOut_checkErrorDisplayOnConfirm() {
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.create_new_appt)).performClick()
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.add_new_appt)).performClick()
-        composeTestRule.onNodeWithText(instrumentationContext.resources.getString(R.string.err_msg_error_dlg)).assertIsDisplayed()
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.confirm_error_dlg)).performClick()
+    fun test1_NoAppointmentIsVisible() {
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.zero_appt)).assertIsDisplayed()
+    }
+
+    @Test
+    fun test2_addApptWithoutAllFieldsFilledOut_checkErrorDisplayOnConfirm() {
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.create_new_appt)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.add_new_appt)).performClick()
+        composeTestRule.onNodeWithText(appContext.resources.getString(R.string.err_msg_error_dlg)).assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.confirm_error_dlg)).performClick()
     }
 
     @OptIn(ExperimentalTestApi::class)
     @Test
-    fun test2_AddNewAppt_checkNewAppt() {
+    fun test3_AddNewAppt_checkNewAppt() {
         val testCityName = "Dallas"
         val currentDateTime = Calendar.getInstance().time
         val sdf = SimpleDateFormat("E, LLL dd", Locale.getDefault()).apply {
@@ -134,16 +140,16 @@ class AppointmentEndToEndTest {
         val testCurrentDateApptFormatted = sdf2.format(currentDateTime)
         val testCurrTimeApptFormatted = "6:30 PM"
 
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.zero_appt)).assertIsDisplayed()
+        //composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.zero_appt)).assertIsDisplayed()
 
         // Add btn to lead add appointment screen
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.create_new_appt)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.create_new_appt)).performClick()
 
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_description)).performTextInput(testDescription)
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_city)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.appt_description)).performTextInput(testDescription)
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.appt_city)).performClick()
         composeTestRule.onNodeWithText(testCityName).performClick()
 
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_date)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.appt_date)).performClick()
 
         onView(withId(com.google.android.material.R.id.date_picker_actions))
             .inRoot(RootMatchers.isDialog())
@@ -158,7 +164,7 @@ class AppointmentEndToEndTest {
             .perform(click())
 
         onView(withId(com.google.android.material.R.id.confirm_button)).perform(click())
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_time)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.appt_time)).performClick()
 
         onView(withId(com.google.android.material.R.id.material_timepicker_view))
             .inRoot(RootMatchers.isDialog())
@@ -172,7 +178,7 @@ class AppointmentEndToEndTest {
         onView(withContentDescription("30 minutes")).perform(click())
         onView(withId(com.google.android.material.R.id.material_timepicker_ok_button)).perform(click())
 
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.add_new_appt)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.add_new_appt)).performClick()
 
         composeTestRule.waitUntilAtLeastOneExists(hasText(testDescription))
         composeTestRule.waitUntilAtLeastOneExists(hasText("Location: $testCityName"))
@@ -183,7 +189,7 @@ class AppointmentEndToEndTest {
 
     @OptIn(ExperimentalTestApi::class)
     @Test
-    fun test3_addNewAppt_editThatAppt() {
+    fun test4_addNewAppt_editThatAppt() {
         val testDescription = "Test Content 789"
         val testCityName = "Austin"
         //val currentDateTime = Calendar.getInstance().time
@@ -200,13 +206,13 @@ class AppointmentEndToEndTest {
         val testCurrTimeApptFormatted = "6:30 PM"
 
         // Add btn to lead add appointment screen
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.create_new_appt)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.create_new_appt)).performClick()
 
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_description)).performTextInput(testDescription)
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_city)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.appt_description)).performTextInput(testDescription)
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.appt_city)).performClick()
         composeTestRule.onNodeWithText(testCityName).performClick()
 
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_date)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.appt_date)).performClick()
 
         onView(withId(com.google.android.material.R.id.date_picker_actions))
             .inRoot(RootMatchers.isDialog())
@@ -220,7 +226,7 @@ class AppointmentEndToEndTest {
         onView(withContentDescription("Today $testCurrDateStr")).perform(click())
 
         onView(withId(com.google.android.material.R.id.confirm_button)).perform(click())
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_time)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.appt_time)).performClick()
 
         onView(withId(com.google.android.material.R.id.material_timepicker_view))
             .inRoot(RootMatchers.isDialog())
@@ -234,7 +240,7 @@ class AppointmentEndToEndTest {
         onView(withContentDescription("30 minutes")).perform(click())
         onView(withId(com.google.android.material.R.id.material_timepicker_ok_button)).perform(click())
 
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.add_new_appt)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.add_new_appt)).performClick()
 
         composeTestRule.waitUntilAtLeastOneExists(hasText(testDescription))
         composeTestRule.waitUntilAtLeastOneExists(hasText("Location: $testCityName"))
@@ -258,13 +264,13 @@ class AppointmentEndToEndTest {
         val testPrevDateApptFormatted = sdf2.format(previousDateTime)
         val testCurrTimeApptFormatted2 = "8:45 PM"
 
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_description)).performTextClearance()
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_description)).performTextInput(testDescription2)
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.appt_description)).performTextClearance()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.appt_description)).performTextInput(testDescription2)
 
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_city)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.appt_city)).performClick()
         composeTestRule.onNodeWithText(testCityName2).performClick()
 
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_date)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.appt_date)).performClick()
 
         onView(withId(com.google.android.material.R.id.date_picker_actions))
             .inRoot(RootMatchers.isDialog())
@@ -278,7 +284,7 @@ class AppointmentEndToEndTest {
         onView(withContentDescription(testPrevDateStr)).perform(click())
 
         onView(withId(com.google.android.material.R.id.confirm_button)).perform(click())
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_time)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.appt_time)).performClick()
 
         onView(withId(com.google.android.material.R.id.material_timepicker_view))
             .inRoot(RootMatchers.isDialog())
@@ -292,7 +298,7 @@ class AppointmentEndToEndTest {
         onView(withContentDescription("45 minutes")).perform(click())
         onView(withId(com.google.android.material.R.id.material_timepicker_ok_button)).perform(click())
 
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.update_appt)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.update_appt)).performClick()
 
         composeTestRule.waitUntilAtLeastOneExists(hasText(testDescription2))
         composeTestRule.waitUntilAtLeastOneExists(hasText("Location: $testCityName2"))
@@ -301,16 +307,16 @@ class AppointmentEndToEndTest {
     }
 
     @Test
-    fun test4_editExistingApptClearAField_checkErrorDisplayOnConfirm() {
+    fun test5_editExistingApptClearAField_checkErrorDisplayOnConfirm() {
         composeTestRule.onNodeWithText(testDescription).performClick()
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_description)).performTextClearance()
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.update_appt)).performClick()
-        composeTestRule.onNodeWithText(instrumentationContext.resources.getString(R.string.err_msg_error_dlg)).assertIsDisplayed()
-        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.confirm_error_dlg)).performClick()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.appt_description)).performTextClearance()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.update_appt)).performClick()
+        composeTestRule.onNodeWithText(appContext.resources.getString(R.string.err_msg_error_dlg)).assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.confirm_error_dlg)).performClick()
     }
 
     @Test
-    fun test5_removeExistingAppt_checkItDoesNotExist() {
+    fun test6_removeExistingAppt_checkItDoesNotExist() {
         composeTestRule.onNodeWithText(testDescription).performTouchInput {
             swipeLeft()
         }
