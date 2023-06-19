@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Appointment Scheduler</string>
+    <string name="appt_main_title">Appointments</string>
+
+    <string name="zero_appt">Zero appointment</string>
+    <string name="no_appt_msg">No appointment is available</string>
+    <string name="create_new_appt">Create a New Appointment</string>
     <string name="add_new_appt">Add New Appointment</string>
     <string name="update_appt">Update Appointment</string>
 

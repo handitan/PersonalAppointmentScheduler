@@ -1,16 +1,16 @@
 package com.handitan.personalappointmentscheduler.presentation.ui.appointmentList
 
+import android.content.Context
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.test.platform.app.InstrumentationRegistry
 import com.handitan.personalappointmentscheduler.MainActivity
-import com.handitan.personalappointmentscheduler.core.Constants
-import com.handitan.personalappointmentscheduler.core.TestTags
+import com.handitan.personalappointmentscheduler.R
 import com.handitan.personalappointmentscheduler.data.di.AppModule
 import com.handitan.personalappointmentscheduler.navigation.Screen
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -24,6 +24,8 @@ import org.junit.Test
 @HiltAndroidTest
 @UninstallModules(AppModule::class)
 class AppointmentListScreenTest {
+
+    private val instrumentationContext: Context = InstrumentationRegistry.getInstrumentation().targetContext
 
     @get:Rule(order=0)
     val hiltRule = HiltAndroidRule(this)
@@ -56,7 +58,7 @@ class AppointmentListScreenTest {
 
     @Test
     fun mainScreen_NoAppointment_isVisible() {
-        composeTestRule.onNodeWithTag(TestTags.NOAPPOINTMENT).assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.no_appt_msg)).assertIsDisplayed()
     }
 
 }

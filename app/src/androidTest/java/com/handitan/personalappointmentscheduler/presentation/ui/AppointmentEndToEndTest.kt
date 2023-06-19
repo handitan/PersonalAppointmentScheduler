@@ -9,7 +9,6 @@ import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
-import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
@@ -30,7 +29,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.platform.app.InstrumentationRegistry
 import com.handitan.personalappointmentscheduler.MainActivity
-import com.handitan.personalappointmentscheduler.core.TestTags
 import com.handitan.personalappointmentscheduler.data.di.AppModule
 import com.handitan.personalappointmentscheduler.navigation.Screen
 import com.handitan.personalappointmentscheduler.presentation.ui.add_Appointment.AddAppointmentScreen
@@ -114,7 +112,7 @@ class AppointmentEndToEndTest {
 
     @Test
     fun test1_addApptWithoutAllFieldsFilledOut_checkErrorDisplayOnConfirm() {
-        composeTestRule.onNodeWithTag(TestTags.ADDAPPOINTMENTBTN).performClick()
+        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.create_new_appt)).performClick()
         composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.add_new_appt)).performClick()
         composeTestRule.onNodeWithText(instrumentationContext.resources.getString(R.string.err_msg_error_dlg)).assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.confirm_error_dlg)).performClick()
@@ -136,10 +134,10 @@ class AppointmentEndToEndTest {
         val testCurrentDateApptFormatted = sdf2.format(currentDateTime)
         val testCurrTimeApptFormatted = "6:30 PM"
 
-        composeTestRule.onNodeWithTag(TestTags.NOAPPOINTMENT).assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.zero_appt)).assertIsDisplayed()
 
         // Add btn to lead add appointment screen
-        composeTestRule.onNodeWithTag(TestTags.ADDAPPOINTMENTBTN).performClick()
+        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.create_new_appt)).performClick()
 
         composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_description)).performTextInput(testDescription)
         composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_city)).performClick()
@@ -202,7 +200,7 @@ class AppointmentEndToEndTest {
         val testCurrTimeApptFormatted = "6:30 PM"
 
         // Add btn to lead add appointment screen
-        composeTestRule.onNodeWithTag(TestTags.ADDAPPOINTMENTBTN).performClick()
+        composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.create_new_appt)).performClick()
 
         composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_description)).performTextInput(testDescription)
         composeTestRule.onNodeWithContentDescription(instrumentationContext.resources.getString(R.string.appt_city)).performClick()

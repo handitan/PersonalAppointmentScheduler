@@ -1,5 +1,6 @@
 package com.handitan.personalappointmentscheduler.presentation.ui.appointmentList
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,12 +25,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.handitan.personalappointmentscheduler.core.Constants
-import com.handitan.personalappointmentscheduler.core.TestTags
+import com.handitan.personalappointmentscheduler.R
 import com.handitan.personalappointmentscheduler.presentation.ui.appointmentList.components.AppointmentCard
 import com.handitan.personalappointmentscheduler.presentation.ui.appointmentList.components.SwipeToDeleteBackground
 
@@ -41,15 +43,19 @@ fun AppointmentListScreen(
     navigateToAddApptScreen:()->Unit
 ) {
 
+    val activity = LocalContext.current as AppCompatActivity
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Appointments")},
+                title = { Text(text = activity.getString(R.string.appt_main_title))},
             )
         },
         floatingActionButton = {
             FloatingActionButton(
-                modifier = Modifier.testTag(TestTags.ADDAPPOINTMENTBTN),
+                modifier = Modifier.semantics {
+                      contentDescription = activity.getString(R.string.create_new_appt)
+                },
                 onClick = {}) {
                 IconButton(
                     onClick = {
@@ -69,8 +75,10 @@ fun AppointmentListScreen(
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(modifier = Modifier.testTag(TestTags.NOAPPOINTMENT),
-                        text = "No appointment is available"
+                    Text(modifier = Modifier.semantics {
+                        contentDescription = activity.getString(R.string.zero_appt)
+                    },
+                        text = activity.getString(R.string.no_appt_msg)
                     )
                 }
             } else {
