@@ -1,6 +1,19 @@
 <resources>
     <string name="app_name">Appointment Scheduler</string>
-    <string name="contentdesc_add_new_appt">Add New Appointment</string>
-    <string name="contentdesc_appt_description">Description</string>
-    <string name="contentdesc_appt_city">City</string>
+    <string name="add_new_appt">Add New Appointment</string>
+    <string name="update_appt">Update Appointment</string>
+
+    <string name="appt_description">Description</string>
+    <string name="appt_city">City</string>
+    <string name="appt_city_name">City Name</string>
+    <string name="appt_date">Appointment Date</string>
+    <string name="appt_time">Appointment Time</string>
+
+    <string name="appt_add_confirmation">Add</string>
+    <string name="appt_update_confirmation">Update</string>
+
+    <string name="title_error_dlg">Error</string>
+    <string name="confirm_error_dlg">Confirm Error Dialog</string>
+    <string name="err_msg_error_dlg">Please fill out all the fields</string>
+    <string name="confirm_action_error_dlg">OK</string>
 </resources>

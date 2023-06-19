@@ -78,21 +78,23 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
         ) {
             OutlinedTextField(
                 modifier = Modifier.semantics {
-                  contentDescription = activity.getString(R.string.contentdesc_appt_description)
+                  contentDescription = activity.getString(R.string.appt_description)
                 },
                 value = addApptViewModel.currentApptViewData.description,
                 onValueChange = {
                     addApptViewModel.updateDescription(it)
                 },
                 maxLines = 5,
-                label = { Text(text = "Description") }
+                label = {
+                    Text(text = activity.getString(R.string.appt_description))
+                }
             )
 
 
             ExposedDropdownMenuBox(
                 modifier = Modifier
                     .semantics {
-                        contentDescription = "City"
+                        contentDescription = activity.getString(R.string.appt_city)
                     },
                 expanded = expanded,
                 onExpandedChange = { expanded = !expanded }) {
@@ -102,7 +104,9 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                     readOnly = true,
                     value = addApptViewModel.currentApptViewData.cityName,
                     onValueChange = {},
-                    label = { Text(text = "City") },
+                    label = {
+                        Text(text = activity.getString(R.string.appt_city))
+                    },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) })
 
                 ExposedDropdownMenu(
@@ -111,7 +115,7 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                     addApptViewModel.cityList.forEach {
                         DropdownMenuItem(
                             modifier = Modifier.semantics {
-                               contentDescription = "CityName"
+                               contentDescription = activity.getString(R.string.appt_city_name)
                             },
                             text = { Text(text = it.name) },
                             onClick = {
@@ -129,13 +133,13 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                 value = addApptViewModel.savedDateStr,
                 modifier = Modifier
                     .semantics {
-                        contentDescription = "Appointment Date"
+                        contentDescription = activity.getString(R.string.appt_date)
                     }
                     .clickable(onClick = {
                         val datePicker = MaterialDatePicker
                             .Builder
                             .datePicker()
-                            .setTitleText("Appointment Date")
+                            .setTitleText(activity.getString(R.string.appt_date))
                             .build()
 
                         datePicker.show(activity.supportFragmentManager, "DATE_PICKER")
@@ -146,7 +150,7 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                 readOnly = true,
                 enabled = false,
                 onValueChange = {},
-                label = { Text(text = "Appointment Date") },
+                label = { Text(text = activity.getString(R.string.appt_date)) },
                 colors = outlineTextFieldColor,
                 trailingIcon = {
                     Icon(imageVector = Icons.Sharp.DateRange,
@@ -158,12 +162,12 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                 value = Utilities.convertTimeToString(addApptViewModel.currentApptViewData.timeHour,addApptViewModel.currentApptViewData.timeMinute),
                 modifier = Modifier
                     .semantics {
-                        contentDescription = "Appointment Time"
+                        contentDescription = activity.getString(R.string.appt_time)
                     }
                     .clickable(onClick = {
                         val timePicker = MaterialTimePicker
                             .Builder()
-                            .setTitleText("Appointment Time")
+                            .setTitleText(activity.getString(R.string.appt_time))
                             .build()
 
                         timePicker.show(activity.supportFragmentManager, "TIME_PICKER")
@@ -177,7 +181,7 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                 readOnly = true,
                 enabled = false,
                 onValueChange = {},
-                label = { Text(text = "Appointment Time") },
+                label = { Text(text = activity.getString(R.string.appt_time)) },
                 colors = outlineTextFieldColor,
                 trailingIcon = {
                     Icon(imageVector = Icons.Sharp.Face,
@@ -188,7 +192,7 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
             Button(modifier = Modifier
                 .padding(top = 10.dp)
                 .semantics {
-                    contentDescription = activity.getString(R.string.contentdesc_add_new_appt)
+                    contentDescription = activity.getString(R.string.add_new_appt)
                 },
                 onClick = {
                     if (Utilities.verifyApptFieldsFilledOut(addApptViewModel.currentApptViewData.description,
@@ -201,7 +205,7 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                         showConfirmDialog = true
                     }
                 }) {
-                Text(text = "Add")
+                Text(text = activity.getString(R.string.appt_add_confirmation))
             }
 
             if (showConfirmDialog) {

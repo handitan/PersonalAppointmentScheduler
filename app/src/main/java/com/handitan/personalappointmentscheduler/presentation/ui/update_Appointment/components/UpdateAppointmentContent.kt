@@ -36,6 +36,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
+import com.handitan.personalappointmentscheduler.R
 import com.handitan.personalappointmentscheduler.core.TestTags
 import com.handitan.personalappointmentscheduler.core.Utilities
 import com.handitan.personalappointmentscheduler.presentation.ui.update_Appointment.UpdateAppointmentViewModel
@@ -73,20 +74,20 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
 
             OutlinedTextField(
                 modifier = Modifier.semantics {
-                    contentDescription = "Description"
+                    contentDescription = activity.getString(R.string.appt_description)
                 },
                 value = updateApptViewModel.currentApptViewData.description,
                 onValueChange = {
                     updateApptViewModel.updateDescription(it)
                 },
                 maxLines = 5,
-                label = { Text(text = "Description") }
+                label = { Text(text = activity.getString(R.string.appt_description)) }
             )
 
             ExposedDropdownMenuBox(
                 modifier = Modifier
                     .semantics {
-                        contentDescription = "City"
+                        contentDescription = activity.getString(R.string.appt_city)
                     },
                 expanded = expanded,
                 onExpandedChange = { expanded = !expanded }) {
@@ -95,7 +96,7 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
                     readOnly = true,
                     value = updateApptViewModel.currentApptViewData.cityName,
                     onValueChange = {},
-                    label = { Text(text = "City") },
+                    label = { Text(text = activity.getString(R.string.appt_city)) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) })
 
                 ExposedDropdownMenu(
@@ -104,7 +105,7 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
                     updateApptViewModel.cityList.forEach { it ->
                         DropdownMenuItem(
                             modifier = Modifier.semantics {
-                                contentDescription = "CityName"
+                                contentDescription = activity.getString(R.string.appt_city_name)
                             },
                             text = { Text(text = it.name) },
                             onClick = {
@@ -121,14 +122,14 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
                 value = updateApptViewModel.savedDateStr,
                 modifier = Modifier
                     .semantics {
-                        contentDescription = "Appointment Date"
+                        contentDescription = activity.getString(R.string.appt_date)
                     }
                     .clickable (onClick = {
                     val datePicker = MaterialDatePicker
                         .Builder
                         .datePicker()
                         .setSelection(updateApptViewModel.currentApptViewData.date)
-                        .setTitleText("Appointment Date")
+                        .setTitleText(activity.getString(R.string.appt_date))
                         .build()
 
                     datePicker.show(activity.supportFragmentManager, "DATE_PICKER")
@@ -139,7 +140,7 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
                 readOnly = true,
                 enabled = false,
                 onValueChange = {},
-                label = { Text(text = "Appointment Date") },
+                label = { Text(text = activity.getString(R.string.appt_date)) },
                 colors = outlineTextFieldColor,
                 trailingIcon = {
                     Icon(imageVector = Icons.Sharp.DateRange,
@@ -151,14 +152,14 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
                 value = Utilities.convertTimeToString(updateApptViewModel.currentApptViewData.timeHour,updateApptViewModel.currentApptViewData.timeMinute),
                 modifier = Modifier
                     .semantics {
-                        contentDescription = "Appointment Time"
+                        contentDescription = activity.getString(R.string.appt_time)
                     }
                     .clickable {
                     val timePicker = MaterialTimePicker
                         .Builder()
                         .setHour(updateApptViewModel.currentApptViewData.timeHour)
                         .setMinute(updateApptViewModel.currentApptViewData.timeMinute)
-                        .setTitleText("Appointment Time")
+                        .setTitleText(activity.getString(R.string.appt_time))
                         .build()
 
                     timePicker.show(activity.supportFragmentManager, "TIME_PICKER")
@@ -172,7 +173,7 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
                 readOnly = true,
                 enabled = false,
                 onValueChange = {},
-                label = { Text(text = "Appointment Time") },
+                label = { Text(text = activity.getString(R.string.appt_time)) },
                 colors = outlineTextFieldColor,
                 trailingIcon = {
                     Icon(imageVector = Icons.Sharp.Face,
@@ -183,7 +184,7 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
             Button(modifier = Modifier
                 .padding(top = 10.dp)
                 .semantics {
-                    contentDescription = "Update Appointment"
+                    contentDescription = activity.getString(R.string.update_appt)
                 },
                 onClick = {
                     if (Utilities.verifyApptFieldsFilledOut(updateApptViewModel.currentApptViewData.description,
@@ -196,7 +197,7 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
                         showConfirmDialog = true
                     }
                 }) {
-                Text(text = "Update")
+                Text(text = activity.getString(R.string.appt_update_confirmation))
             }
         }
 
