@@ -1,5 +1,6 @@
 package com.handitan.personalappointmentscheduler.data.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Ignore
@@ -20,6 +21,7 @@ data class Appointment(
     @PrimaryKey(autoGenerate = true)
     val id:Long,
     val description:String,
+    @ColumnInfo(index = true)
     val cityId:Long,
     val date:Long,
     val hour:Int,
