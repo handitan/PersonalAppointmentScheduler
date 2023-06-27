@@ -3,6 +3,7 @@ package com.handitan.personalappointmentscheduler.data.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import com.handitan.personalappointmentscheduler.core.Constants.Companion.CITY_TABLE
 import com.handitan.personalappointmentscheduler.data.model.City
 
@@ -13,4 +14,10 @@ interface CityDao {
 
     @Insert
     fun insert(city:City)
+
+    @Insert
+    fun insertAll(cities: List<City>)
+
+
+
 }
