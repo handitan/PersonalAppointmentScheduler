@@ -26,21 +26,15 @@ abstract class TestAppointmentSchedulerDb : RoomDatabase(){
                 scope.launch {
                     val cityDao = database.CityDao()
 
-                    val city1 = City(0,"Austin")
-                    val city2 = City(0,"Baltimore")
-                    val city3 = City(0, "Cleveland")
-                    val city4 = City(0,"Dallas")
-                    val city5 = City(0,"El Paso")
-                    val city6 = City(0,"Fresno")
-                    val city7 = City(0,"Georgetown")
-                    cityDao.insert(city1)
-                    cityDao.insert(city2)
-                    cityDao.insert(city3)
-                    cityDao.insert(city4)
-                    cityDao.insert(city5)
-                    cityDao.insert(city6)
-                    cityDao.insert(city7)
-
+                    cityDao.insertAll(listOf(
+                        City(0,"Austin"),
+                        City(0,"Baltimore"),
+                        City(0, "Cleveland"),
+                        City(0,"Dallas"),
+                        City(0,"El Paso"),
+                        City(0,"Fresno"),
+                        City(0,"Georgetown")
+                    ))
                 }
 
             }
