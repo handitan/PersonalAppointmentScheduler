@@ -2,6 +2,7 @@ package com.handitan.personalappointmentscheduler.presentation.ui.appointmentLis
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -46,14 +48,10 @@ fun AppointmentListScreen(
     val activity = LocalContext.current as AppCompatActivity
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = activity.getString(R.string.appt_main_title))},
-            )
-        },
         floatingActionButton = {
             FloatingActionButton(
-                modifier = Modifier.semantics {
+                modifier = Modifier
+                    .semantics {
                       contentDescription = activity.getString(R.string.create_new_appt)
                 },
                 onClick = {}) {
