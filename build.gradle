@@ -6,6 +6,17 @@ buildscript {
         hilt_navigation_compose_version = '1.1.0-alpha01'
         lifecycle_viewmodel_ktx_version = '2.6.1'
         material3_version = '1.1.0'
+        material_comp_version = '1.9.0'
+        lifecycle_runtime_compose_version = '2.6.1'
+        hilt_android_testing_version = '2.44'
+        espresso_contrib_version = '3.5.1'
+        core_ktx_version = '1.10.1'
+        lifecycle_runtime_ktx_version = '2.6.1'
+        activity_compose_version = '1.7.1'
+        compose_bom_version = '2022.10.00'
+        junit_version = '4.13.2'
+        junit_test_version = '1.1.5'
+        espresso_core_test_version = '3.5.1'
     }
 
     dependencies {
