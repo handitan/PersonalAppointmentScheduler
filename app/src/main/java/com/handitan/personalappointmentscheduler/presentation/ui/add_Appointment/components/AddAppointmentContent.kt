@@ -38,6 +38,7 @@ import com.handitan.personalappointmentscheduler.R
 import com.handitan.personalappointmentscheduler.core.Utilities
 import com.handitan.personalappointmentscheduler.presentation.ui.add_Appointment.AddAppointmentViewModel
 import com.handitan.personalappointmentscheduler.presentation.ui.update_Appointment.components.ApptInputConfirmationDialog
+import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -132,11 +133,7 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                         contentDescription = activity.getString(R.string.appt_date)
                     }
                     .clickable(onClick = {
-                        val datePicker = MaterialDatePicker
-                            .Builder
-                            .datePicker()
-                            .setTitleText(activity.getString(R.string.appt_date))
-                            .build()
+                        val datePicker = Utilities.createDatePicker(Calendar.getInstance().timeInMillis,activity.getString(R.string.appt_date))
 
                         datePicker.show(activity.supportFragmentManager, "DATE_PICKER")
                         datePicker.addOnPositiveButtonClickListener {
@@ -161,10 +158,11 @@ fun AddAppointmentContent(paddingValues: PaddingValues,
                         contentDescription = activity.getString(R.string.appt_time)
                     }
                     .clickable(onClick = {
-                        val timePicker = MaterialTimePicker
-                            .Builder()
-                            .setTitleText(activity.getString(R.string.appt_time))
-                            .build()
+                        val timePicker = Utilities.createTimePicker(
+                                            12,
+                                            0,
+                                            activity.getString(R.string.appt_time)
+                                        )
 
                         timePicker.show(activity.supportFragmentManager, "TIME_PICKER")
                         timePicker.addOnPositiveButtonClickListener {

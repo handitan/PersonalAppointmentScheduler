@@ -121,12 +121,7 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
                         contentDescription = activity.getString(R.string.appt_date)
                     }
                     .clickable (onClick = {
-                    val datePicker = MaterialDatePicker
-                        .Builder
-                        .datePicker()
-                        .setSelection(updateApptViewModel.currentApptViewData.date)
-                        .setTitleText(activity.getString(R.string.appt_date))
-                        .build()
+                    val datePicker = Utilities.createDatePicker(updateApptViewModel.currentApptViewData.date,activity.getString(R.string.appt_date))
 
                     datePicker.show(activity.supportFragmentManager, "DATE_PICKER")
                     datePicker.addOnPositiveButtonClickListener {
@@ -151,12 +146,11 @@ fun UpdateAppointmentContent(paddingValues: PaddingValues,
                         contentDescription = activity.getString(R.string.appt_time)
                     }
                     .clickable {
-                    val timePicker = MaterialTimePicker
-                        .Builder()
-                        .setHour(updateApptViewModel.currentApptViewData.timeHour)
-                        .setMinute(updateApptViewModel.currentApptViewData.timeMinute)
-                        .setTitleText(activity.getString(R.string.appt_time))
-                        .build()
+                    val timePicker = Utilities.createTimePicker(
+                                        updateApptViewModel.currentApptViewData.timeHour,
+                                        updateApptViewModel.currentApptViewData.timeMinute,
+                                        activity.getString(R.string.appt_time)
+                                     )
 
                     timePicker.show(activity.supportFragmentManager, "TIME_PICKER")
                     timePicker.addOnPositiveButtonClickListener {

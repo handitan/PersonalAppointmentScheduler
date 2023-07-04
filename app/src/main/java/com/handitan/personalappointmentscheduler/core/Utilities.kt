@@ -1,6 +1,10 @@
 package com.handitan.personalappointmentscheduler.core
 
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.handitan.personalappointmentscheduler.R
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
@@ -39,6 +43,26 @@ class Utilities {
             }
 
             return "$hourStr:$minuteStr $timeIndicator"
+        }
+
+        fun createDatePicker(setDate :Long,titleText:String):MaterialDatePicker<Long> {
+            return MaterialDatePicker
+                .Builder
+                .datePicker()
+                .setTheme(R.style.MaterialCalendarTheme)
+                .setSelection(setDate)
+                .setTitleText(titleText)
+                .build()
+        }
+
+        fun createTimePicker(hour:Int, minute:Int, titleText:String):MaterialTimePicker {
+            return MaterialTimePicker
+                .Builder()
+                .setTheme(R.style.MaterialTimePickerTheme)
+                .setHour(hour)
+                .setMinute(minute)
+                .setTitleText(titleText)
+                .build()
         }
     }
 }
