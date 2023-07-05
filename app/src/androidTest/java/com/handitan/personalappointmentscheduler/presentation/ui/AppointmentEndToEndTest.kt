@@ -129,13 +129,13 @@ class AppointmentEndToEndTest {
     fun test3_AddNewAppt_checkNewAppt() {
         val testCityName = "Dallas"
         val currentDateTime = Calendar.getInstance().time
-        val sdf = SimpleDateFormat("E, LLL dd", Locale.getDefault()).apply {
-            timeZone = TimeZone.getDefault()//TimeZone.getTimeZone("UTC")
+        val sdf = SimpleDateFormat("E, LLL d", Locale.getDefault()).apply {
+            timeZone = TimeZone.getTimeZone("UTC")
         }
 
         val testCurrDateStr = sdf.format(currentDateTime)
         val sdf2 = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).apply {
-            timeZone = TimeZone.getDefault()//TimeZone.getTimeZone("UTC")
+            timeZone = TimeZone.getTimeZone("UTC")
         }
         val testCurrentDateApptFormatted = sdf2.format(currentDateTime)
         val testCurrTimeApptFormatted = "6:30 PM"
@@ -192,15 +192,15 @@ class AppointmentEndToEndTest {
     fun test4_addNewAppt_editThatAppt() {
         val testDescription = "Test Content 789"
         val testCityName = "Austin"
-        //val currentDateTime = Calendar.getInstance().time
-        val currentDateTime = Calendar.getInstance(TimeZone.getTimeZone("CDT")).time
-        val sdf = SimpleDateFormat("E, LLL dd", Locale.getDefault()).apply {
-            timeZone = TimeZone.getDefault()
+        val currentDateTime = Calendar.getInstance().time
+        //val currentDateTime = Calendar.getInstance(TimeZone.getTimeZone("CDT")).time
+        val sdf = SimpleDateFormat("E, LLL d", Locale.getDefault()).apply {
+            timeZone = TimeZone.getTimeZone("UTC")
         }
 
         val testCurrDateStr = sdf.format(currentDateTime)
         val sdf2 = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).apply {
-            timeZone = TimeZone.getDefault()
+            timeZone = TimeZone.getTimeZone("UTC")
         }
         val testCurrentDateApptFormatted = sdf2.format(currentDateTime)
         val testCurrTimeApptFormatted = "6:30 PM"
