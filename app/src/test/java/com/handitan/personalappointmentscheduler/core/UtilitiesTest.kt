@@ -5,21 +5,23 @@ import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runners.MethodSorters
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class UtilitiesTest {
     @Test
-    fun test1_verifyChangeToDateString() {
+    fun `Pass timeInMillis to changeToDateString, output date in String format needs to match`() {
         val currDateTime = 1688128079157
         val dateToMatched = "06/30/2023"
         val curDateStr = Utilities.changeToDateString(currDateTime)
-        assertThat("Date doesn't matched: $curDateStr",curDateStr == dateToMatched)
+        assertThat("Date doesn't match: $curDateStr",curDateStr == dateToMatched)
     }
 
     @Test
-    fun test2_verifyApptFieldsFilledOut() {
+    fun `Non-empty strings and non-zero value are passed to verifyApptFieldsFilledOut, returns true`() {
         val allFilledOut = Utilities.verifyApptFieldsFilledOut("TestDesc", "TestCityName", "TestAppDateStr", 12)
         assertThat("All fields must be filled out: $allFilledOut", allFilledOut)
+    }
 
+    @Test
+    fun `An empty string or zero value are passed to verifyApptFieldsFilledOut, returns false`() {
         val descNotFilledOut = Utilities.verifyApptFieldsFilledOut("", "TestCityName", "TestAppDateStr", 12)
         assertThat("Description is supposed to be empty", !descNotFilledOut)
 
@@ -34,20 +36,23 @@ class UtilitiesTest {
     }
 
     @Test
-    fun test3_convertTimeToString() {
+    fun `Invalid hour to convertTimeToString, output should match to empty string`() {
+        val timeStr5 = Utilities.convertTimeToString(0, 25)
+        assertThat("Time 5 value doesn't match: $timeStr5", timeStr5 == "")
+    }
+
+    @Test
+    fun `Valid hour and minute to convertTimeToString, output Time in String format needs to match`() {
         val timeStr1 = Utilities.convertTimeToString(12,15)
-        assertThat("Time 1 value doesn't matched: $timeStr1", timeStr1 == "12:15 PM")
+        assertThat("Time 1 value doesn't match: $timeStr1", timeStr1 == "12:15 PM")
 
         val timeStr2 = Utilities.convertTimeToString(8,45)
-        assertThat("Time 2 value doesn't matched: $timeStr2", timeStr2 == "8:45 AM")
+        assertThat("Time 2 value doesn't match: $timeStr2", timeStr2 == "8:45 AM")
 
         val timeStr3 = Utilities.convertTimeToString(21,25)
-        assertThat("Time 3 value doesn't matched: $timeStr3", timeStr3 == "9:25 PM")
+        assertThat("Time 3 value doesn't match: $timeStr3", timeStr3 == "9:25 PM")
 
         val timeStr4 = Utilities.convertTimeToString(1,10)
-        assertThat("Time 4 value doesn't matched: $timeStr4", timeStr4 == "1:10 AM")
-
-        val timeStr5 = Utilities.convertTimeToString(0,25)
-        assertThat("Time 5 value doesn't matched: $timeStr5", timeStr5 == "")
+        assertThat("Time 4 value doesn't match: $timeStr4", timeStr4 == "1:10 AM")
     }
 }

@@ -54,7 +54,7 @@ class AppointmentDaoTest {
     }
 
     @Test
-    fun test1_queryAllCity_verifyCities() = runBlocking {
+    fun test1_queryAllCity_allCitiesWereReturnedCorrectly() = runBlocking {
         val myCities = database.CityDao().getCities()
         val cityList = listOf("Austin",
                             "Baltimore",
@@ -71,7 +71,7 @@ class AppointmentDaoTest {
     }
 
     @Test
-    fun test2_addAppointment_verifyAppointmentAddedCorrectly() = runBlocking {
+    fun test2_addNewAppointment_appointmentWasAddedCorrectly() = runBlocking {
         val descriptionVal = "TEST123"
         val currDateTime = Calendar.getInstance().timeInMillis
         val hour = 13
@@ -87,11 +87,11 @@ class AppointmentDaoTest {
         database.AppointmentDao().getAppointments().first().let {
             if (it.isNotEmpty()) {
                 val appt = it[0]
-                assertThat("Description doesn't matched",descriptionVal == appt.description)
-                assertThat("Date in ms doesn't matched",currDateTime == appt.date)
-                assertThat("City ID doesn't matched",cityID == appt.cityId)
-                assertThat("Hour doesn't matched",hour == appt.hour)
-                assertThat("Minute doesn't matched",minute == appt.minute)
+                assertThat("Description doesn't match",descriptionVal == appt.description)
+                assertThat("Date in ms doesn't match",currDateTime == appt.date)
+                assertThat("City ID doesn't match",cityID == appt.cityId)
+                assertThat("Hour doesn't match",hour == appt.hour)
+                assertThat("Minute doesn't match",minute == appt.minute)
 
                 database.AppointmentDao().delete(appt.toAppointment())
             } else {
@@ -101,7 +101,7 @@ class AppointmentDaoTest {
     }
 
     @Test
-    fun test3_addAppointment_updateAppointment_verifyUpdatedAppointment() = runBlocking {
+    fun test3_updateExistingAppointment_apptWasUpdatedSuccessfully() = runBlocking {
         val updatedDesc = "UPDATED12345"
 
         database.AppointmentDao().insert(Appointment(
@@ -122,13 +122,13 @@ class AppointmentDaoTest {
 
         database.AppointmentDao().getAppointments().first().let {
             val apptData = it[0]
-            assertThat("Updated description doesn't matched: ${apptData.description}", apptData.description == updatedDesc)
+            assertThat("Updated description doesn't match: ${apptData.description}", apptData.description == updatedDesc)
             database.AppointmentDao().delete(apptData.toAppointment())
         }
     }
 
     @Test
-    fun test4_addAppointment_deleteAppointment_verifyAppointmentDoesNotExist() = runBlocking {
+    fun test4_deleteExistingAppointments_appointmentListIsEmpty() = runBlocking {
         database.AppointmentDao().insert(Appointment(
             0, "TEST12345", 2L, Calendar.getInstance().timeInMillis, 14, 15
         ))

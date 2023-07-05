@@ -112,12 +112,12 @@ class AppointmentEndToEndTest {
     }
 
     @Test
-    fun test1_NoAppointmentIsVisible() {
+    fun test1_noApptInDatabase_noApptIsVisible() {
         composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.zero_appt)).assertIsDisplayed()
     }
 
     @Test
-    fun test2_addApptWithoutAllFieldsFilledOut_checkErrorDisplayOnConfirm() {
+    fun test2_addApptWithoutAllFieldsFilledOut_errorDialogIsDisplayed() {
         composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.create_new_appt)).performClick()
         composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.add_new_appt)).performClick()
         composeTestRule.onNodeWithText(appContext.resources.getString(R.string.err_msg_error_dlg)).assertIsDisplayed()
@@ -126,7 +126,7 @@ class AppointmentEndToEndTest {
 
     @OptIn(ExperimentalTestApi::class)
     @Test
-    fun test3_AddNewAppt_checkNewAppt() {
+    fun test3_addNewAppt_newApptIsAddedSuccessfully() {
         val testCityName = "Dallas"
         val currentDateTime = Calendar.getInstance().time
         val sdf = SimpleDateFormat("E, LLL d", Locale.getDefault()).apply {
@@ -189,7 +189,7 @@ class AppointmentEndToEndTest {
 
     @OptIn(ExperimentalTestApi::class)
     @Test
-    fun test4_addNewAppt_editThatAppt() {
+    fun test4_updateExistingAppt_updatedInfoInApptWasShown() {
         val testDescription = "Test Content 789"
         val testCityName = "Austin"
         val currentDateTime = Calendar.getInstance().time
@@ -307,7 +307,7 @@ class AppointmentEndToEndTest {
     }
 
     @Test
-    fun test5_editExistingApptClearAField_checkErrorDisplayOnConfirm() {
+    fun test5_clearAFieldInExistingAppt_errorDialogIsDisplayed() {
         composeTestRule.onNodeWithText(testDescription).performClick()
         composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.appt_description)).performTextClearance()
         composeTestRule.onNodeWithContentDescription(appContext.resources.getString(R.string.update_appt)).performClick()
@@ -316,7 +316,7 @@ class AppointmentEndToEndTest {
     }
 
     @Test
-    fun test6_removeExistingAppt_checkItDoesNotExist() {
+    fun test6_removeExistingAppt_deletedApptIsNotDisplayed() {
         composeTestRule.onNodeWithText(testDescription).performTouchInput {
             swipeLeft()
         }
