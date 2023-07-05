@@ -25,8 +25,11 @@
 * Jetpack Compose
 * Room
 
-![](screenshots/AppointmentSchedulerGif1.gif)
+<div>
+<img src="/screenshots/AppointmentSchedulerGif1.gif?raw=true" height="30%" width="30%">
 
-![](screenshots/AppointmentSchedulerGif2.gif)
+<img src="/screenshots/AppointmentSchedulerGif2.gif?raw=true" height="30%" width="30%">
 
-![](screenshots/AppointmentSchedulerGif3.gif)
+<img src="/screenshots/AppointmentSchedulerGif3.gif?raw=true" height="30%" width="30%">
+</div>
+
