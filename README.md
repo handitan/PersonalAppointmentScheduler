@@ -19,24 +19,16 @@
 * Swipe left for appointment deletion
 * Local database
 
+## Modern Android development:
+* Jetpack Compose
+* Room
+* MVVM
+* Navigation
+* Dependency Injection with Hilt
+* Kotlin Coroutines
+* Material3 Theme
+
 ## Testing:
 * Unit Testing
 * End to End Testing with Espresso
-
-## Android Architecture Components:
-* MVVM
-* Navigation
-
-## Dependency Injection:
-* Hilt for Android
-
-## Asynchronous Programming:
-* Kotlin Coroutines
-
-## Style:
-* Material3 Theme
-
-## Other Android Components:
-* Jetpack Compose
-* Room
 
