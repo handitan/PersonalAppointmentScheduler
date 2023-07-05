@@ -6,10 +6,10 @@
 
 ## Testings:
 * Unit Testing
-* End to End Testing
+* End to End Testing with Espresso
 
 ## Android Architecture Components:
-* ViewModel
+* MVVM
 * Navigation
 
 ## Dependency Injection:
@@ -26,10 +26,17 @@
 * Room
 
 <div>
-<img src="/screenshots/AppointmentSchedulerGif1.gif?raw=true" height="30%" width="30%">
-
-<img src="/screenshots/AppointmentSchedulerGif2.gif?raw=true" height="30%" width="30%">
-
-<img src="/screenshots/AppointmentSchedulerGif3.gif?raw=true" height="30%" width="30%">
+<table>
+  <tr>
+    <th>Add a new appointment</th>
+    <th>Edit an existing appointment</th>
+    <th>Delete an existing appointment</th>
+  </tr>
+  <tr>
+    <td><img src="/screenshots/AppointmentSchedulerGif1.gif?raw=true" height="30%" width="90%"></td>
+    <td><img src="/screenshots/AppointmentSchedulerGif2.gif?raw=true" height="30%" width="90%"></td>
+    <td><img src="/screenshots/AppointmentSchedulerGif3.gif?raw=true" height="30%" width="90%"></td>
+  </tr>
+</table>
 </div>
 
